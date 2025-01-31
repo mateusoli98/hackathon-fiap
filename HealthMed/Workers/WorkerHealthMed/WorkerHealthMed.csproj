@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-WorkerSchedule-afbcd1ee-85ca-407b-b330-aa29637f8a79</UserSecretsId>
+    <UserSecretsId>dotnet-WorkerHealthMed-2239de99-3fb2-4003-a420-0ece1dedcd65</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
