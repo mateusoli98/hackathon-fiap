@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace Application.UseCases.CreateContact.Interfaces;
+namespace Application.UseCases.Doctor.CreateDoctor.Interfaces;
 
 public interface ICreateDoctorProcessingUseCase
 {

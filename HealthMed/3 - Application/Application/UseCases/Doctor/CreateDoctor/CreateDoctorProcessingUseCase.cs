@@ -1,9 +1,8 @@
-﻿
-using Application.UseCases.CreateContact.Interfaces;
+﻿using Application.UseCases.Doctor.CreateDoctor.Interfaces;
 using Domain.Entities;
 using Domain.Repositories.Relational;
 
-namespace Application.UseCases.CreateContact
+namespace Application.UseCases.Doctor.CreateDoctor
 {
     public class CreateDoctorProcessingUseCase(IDoctorRepository repository) : ICreateDoctorProcessingUseCase
     {

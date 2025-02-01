@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Application.UseCases.CreateDoctor.Commom;
+namespace Application.UseCases.Doctor.CreateDoctor.Commom;
 
 public class CreateDoctorRequestValidator : AbstractValidator<CreateDoctorRequest>
 {
@@ -18,7 +18,7 @@ public class CreateDoctorRequestValidator : AbstractValidator<CreateDoctorReques
             .NotEmpty().WithMessage("O email é obrigatório.")
             .EmailAddress().WithMessage("O email não está em um formato válido.");
 
-        RuleFor(x=>x.Password)
+        RuleFor(x => x.Password)
             .NotEmpty().WithMessage("A senha é obrigatória.")
             .MinimumLength(6).WithMessage("A senha deve ter entre 6 e 15 caracteres.")
             .MaximumLength(15).WithMessage("A senha deve ter entre 6 e 15 caracteres.")
