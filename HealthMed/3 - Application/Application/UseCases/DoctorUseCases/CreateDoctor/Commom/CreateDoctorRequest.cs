@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Application.UseCases.Doctor.CreateDoctor.Commom;
+namespace Application.UseCases.DoctorUseCases.CreateDoctor.Commom;
 
 public class CreateDoctorRequest
 {

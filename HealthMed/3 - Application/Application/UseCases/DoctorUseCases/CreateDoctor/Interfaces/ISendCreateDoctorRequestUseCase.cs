@@ -1,7 +1,8 @@
-﻿using Application.UseCases.Doctor.CreateDoctor.Commom;
+﻿namespace Application.UseCases.DoctorUseCases.CreateDoctor.Interfaces;
+
+using Application.UseCases.DoctorUseCases.CreateDoctor.Commom;
 using ErrorOr;
 
-namespace Application.UseCases.Doctor.CreateDoctor.Interfaces;
 
 public interface ISendCreateDoctorRequestUseCase
 {

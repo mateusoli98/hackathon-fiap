@@ -1,6 +1,5 @@
-﻿using Domain.Entities;
-
-namespace Application.UseCases.Doctor.CreateDoctor.Interfaces;
+﻿namespace Application.UseCases.DoctorUseCases.CreateDoctor.Interfaces;
+using Domain.Entities;
 
 public interface ICreateDoctorProcessingUseCase
 {

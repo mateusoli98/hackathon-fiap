@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Application.UseCases.Doctor.CreateDoctor.Commom;
+namespace Application.UseCases.DoctorUseCases.CreateDoctor.Commom;
 
 public class CreateDoctorRequestValidator : AbstractValidator<CreateDoctorRequest>
 {
