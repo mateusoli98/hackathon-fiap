@@ -8,14 +8,14 @@ public class CreateDoctorProcessingUseCase(IDoctorRepository repository) : ICrea
 {
     private readonly IDoctorRepository _doctorRepository = repository;
 
-    public async Task Execute(Doctor contact, CancellationToken cancellationToken = default)
+    public async Task Execute(Doctor doctor, CancellationToken cancellationToken = default)
     {
         Console.WriteLine("Validando se o médico já existe");
-        var alreadyExists = await _doctorRepository.Exists(contact.CRM, cancellationToken);
+        var alreadyExists = await _doctorRepository.Exists(doctor.CRM, cancellationToken);
         if (!alreadyExists)
         {
-            Console.WriteLine($"Salvando médico '{contact.Id}'");
-            await _doctorRepository.SaveAsync(contact, cancellationToken);
+            Console.WriteLine($"Salvando médico '{doctor.Id}'");
+            await _doctorRepository.SaveAsync(doctor, cancellationToken);
             return;
         }
 

@@ -3,5 +3,5 @@ using Domain.Entities;
 
 public interface ICreateDoctorProcessingUseCase
 {
-    Task Execute(Doctor contact, CancellationToken cancellationToken = default);
+    Task Execute(Doctor doctor, CancellationToken cancellationToken = default);
 }
