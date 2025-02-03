@@ -8,7 +8,7 @@ public interface IDoctorRepository
 {
     Task<string> SaveAsync(Doctor doctor, CancellationToken cancellationToken = default);
     Task UpdateAsync(Doctor doctor, CancellationToken cancellationToken = default);
-    Task<Doctor?> GetByIdAsync(string id, CancellationToken cancellationToken = default, bool isEnabled = true);
+    Task<Doctor?> GetByIdAsync(long id, CancellationToken cancellationToken = default, bool isEnabled = true);
     Task<bool> Exists(string crm, CancellationToken cancellationToken);
     Task<PaginationResult<Doctor>> SearchAsync(DoctorFilter filter, CancellationToken cancellationToken = default);
     Task DeleteAsync(Doctor doctor, CancellationToken cancellationToken = default);
