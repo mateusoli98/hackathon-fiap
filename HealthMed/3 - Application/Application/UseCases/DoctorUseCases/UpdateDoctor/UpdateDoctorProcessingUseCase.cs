@@ -29,7 +29,7 @@ public class UpdateDoctorProcessingUseCase(IDoctorRepository repository) : IUpda
             return;
         }
 
-        throw new Exception("DDD + Telefone informado já está cadastrado no sistema.");
+        throw new Exception("CRM informado já está cadastrado no sistema.");
     }
 
     private async Task<bool> Validate(Doctor findedDoctor, Doctor updatedDoctor, CancellationToken cancellationToken)
