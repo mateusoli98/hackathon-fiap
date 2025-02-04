@@ -1,6 +1,6 @@
 ﻿namespace Application.UseCases.Doctor.CreateDoctor;
 
-public class SendCreateContactRequestUseCase()
+public class SendCreateDoctorRequestUseCase()
 {
 
 }
