@@ -15,11 +15,11 @@ public class DeleteDoctorProcessingUseCase : IDeleteDoctorProcessingUseCase
 
     public async Task<Error?> Execute(long id, CancellationToken cancellationToken = default)
     {
-        var contact = await _doctorRepository.GetByIdAsync(id, cancellationToken);
+        var doctor = await _doctorRepository.GetByIdAsync(id, cancellationToken);
 
-        if (contact is not null)
+        if (doctor is not null)
         {
-            await _doctorRepository.DeleteAsync(contact, cancellationToken);
+            await _doctorRepository.DeleteAsync(doctor, cancellationToken);
             return null;
         }
 
