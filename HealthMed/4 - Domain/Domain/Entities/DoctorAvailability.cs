@@ -10,6 +10,8 @@ public class DoctorAvailability
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public long AppointmentValue { get; set; }
+    public bool IsEnabled { get; set; }
+
     [ForeignKey("Id")]
     public Doctor Doctor { get; set; } 
     [ForeignKey("Id")]

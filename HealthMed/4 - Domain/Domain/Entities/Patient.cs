@@ -10,4 +10,5 @@ public class Patient
     public string CPF { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty; //Isso deve ser salvo de forma hasheada
+    public bool IsEnabled { get; set; }
 }

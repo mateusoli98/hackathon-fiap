@@ -11,4 +11,5 @@ public class HealthCenter
     public string Street { get; set; } = string.Empty;
     public int Number { get; set; }
     public string PostalCode { get; set; } = string.Empty;
+    public bool IsEnabled { get; set; }
 }

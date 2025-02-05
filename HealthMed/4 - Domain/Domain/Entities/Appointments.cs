@@ -15,7 +15,8 @@ public class Appointments
     public DateTime CreatedAt { get; set; }
 
     public DateTime UpdatedAt { get; set; }
-    
+    public bool IsEnabled { get; set; }
+
     [ForeignKey("Id")]
     public Doctor Doctor { get; set; }
 

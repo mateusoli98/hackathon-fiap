@@ -12,7 +12,9 @@ public class Assessment
     public long Id { get; set; }
     public string Description { get; set; } = string.Empty;
     public int Rating { get; set; }
+    public bool IsEnabled { get; set; }
     public DateTime CreatedAt { get; set; }
+
     [ForeignKey("Id")]
     public Doctor Doctor { get; set; }
 

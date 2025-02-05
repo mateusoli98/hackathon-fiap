@@ -12,4 +12,5 @@ public class Doctor
     public SpecialtyEnum Specialty { get; set; }
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty; //Isso deve ser salvo de forma hasheada
+    public bool IsEnabled { get; set; }
 }
