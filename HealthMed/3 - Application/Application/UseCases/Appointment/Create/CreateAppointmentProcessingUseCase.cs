@@ -20,6 +20,6 @@ public class CreateAppointmentProcessingUseCase(IAppointmentRepository repositor
         //}
 
         //Console.WriteLine("Erro: paciente já existe no banco de dados");
-        throw new Exception("Paciente já cadastrado anteriormente no sistema.");
+        throw new Exception("Agendamento já cadastrado anteriormente no sistema.");
     }
 }
