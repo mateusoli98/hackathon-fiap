@@ -14,6 +14,7 @@ public class Assessment
     public int Rating { get; set; }
     public bool IsEnabled { get; set; }
     public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
 
     [ForeignKey("Id")]
     public Doctor Doctor { get; set; }
