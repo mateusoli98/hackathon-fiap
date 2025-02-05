@@ -6,7 +6,7 @@ namespace Domain.Repositories.Relational;
 
 public interface IPatientRepository
 {
-    Task<string> SaveAsync(Patient patient, CancellationToken cancellationToken = default);
+    Task<long> SaveAsync(Patient patient, CancellationToken cancellationToken = default);
     Task UpdateAsync(Patient patient, CancellationToken cancellationToken = default);
     Task<Patient?> GetByIdAsync(long id, CancellationToken cancellationToken = default, bool isEnabled = true);
     Task<bool> Exists(string cpf, CancellationToken cancellationToken);
