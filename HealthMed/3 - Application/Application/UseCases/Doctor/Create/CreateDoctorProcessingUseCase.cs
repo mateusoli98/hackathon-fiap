@@ -1,4 +1,4 @@
-﻿namespace Application.UseCasesDoctor.Create;
+﻿namespace Application.UseCases.Doctor.Create;
 
 using Application.UseCases.Doctor.Create.Interfaces;
 using Domain.Repositories.Relational;
