@@ -13,5 +13,5 @@ public class DoctorAvailability
     [ForeignKey("Id")]
     public Doctor Doctor { get; set; } 
     [ForeignKey("Id")]
-    public Healthcare Place { get; set; }
+    public HealthCenter Place { get; set; }
 }

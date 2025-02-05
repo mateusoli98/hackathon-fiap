@@ -3,7 +3,7 @@
 namespace Domain.Entities;
 
 
-public class Healthcare
+public class HealthCenter
 {
     [Key]
     public int Id { get; set; }
