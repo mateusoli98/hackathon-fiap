@@ -24,5 +24,8 @@ public class CreateDoctorRequestValidator : AbstractValidator<CreateDoctorReques
             .MaximumLength(15).WithMessage("A senha deve ter entre 6 e 15 caracteres.")
             .Matches(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,15}$")
                 .WithMessage("A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial");
+
+        RuleFor(x => x.Specialty)
+            .NotEmpty().WithMessage("A especialidade é obrigatória.");
     }
 }

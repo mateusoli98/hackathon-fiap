@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.DomainObjects.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Application.UseCases.Doctor.Create.Commom;
 
@@ -20,4 +21,7 @@ public class CreateDoctorRequest
     [StringLength(15, MinimumLength = 6, ErrorMessage = "A senha deve ter entre 6 e 15 caracteres.")]
     [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,15}$", ErrorMessage = "A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial")]
     public string Password { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "A especialidade é obrigatória.")]
+    public SpecialtyEnum Specialty { get; set; }
 }
