@@ -17,7 +17,6 @@ public class AppointmentRepository : IAppointmentRepository
         _dataContext = scopeFactory.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
     }
 
-
     public async Task<Appointments?> GetByIdAsync(long id, CancellationToken cancellationToken = default, bool IsEnable = true)
     {
         var query = _dataContext.Appointments.AsQueryable()
@@ -50,7 +49,7 @@ public class AppointmentRepository : IAppointmentRepository
         {
             var appointmentDate = filter.AppointmentDate.Value.Date;
             query = query.Where(q => q.AppointmentDate.Date == appointmentDate);
-        }      
+        }
 
         var result = await query
             .OrderBy(q => q.CreatedAt)
