@@ -12,6 +12,7 @@ namespace Infra.Persistence.Sql.Repositories;
 public class AssessmentRepository: IAssessmentRepository
 {
     private readonly DataContext _dataContext;
+
     public AssessmentRepository(IServiceScopeFactory scopeFactory)
     {
         _dataContext = scopeFactory.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
