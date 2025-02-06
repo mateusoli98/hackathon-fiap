@@ -5,5 +5,5 @@ namespace Application.UseCases.Doctor.Update.Interfaces;
 
 public interface ISendUpdateDoctorRequestUseCase
 {
-    Task<ErrorOr<UpdateDoctorResponse>> Execute(string doctorId, UpdateDoctorRequest request, CancellationToken cancellationToken = default);
+    Task<ErrorOr<UpdateDoctorResponse>> Execute(long doctorId, UpdateDoctorRequest request, CancellationToken cancellationToken = default);
 }

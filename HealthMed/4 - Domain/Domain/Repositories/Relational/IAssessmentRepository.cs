@@ -12,5 +12,5 @@ public interface IAssessmentRepository
     Task<PaginationResult<Assessment>> SearchAsync(AssessmentFilter filter, CancellationToken cancellationToken = default);
     Task DeleteAsync(Assessment assessment, CancellationToken cancellationToken = default);
     Task PermanentDelete(Assessment assessment, CancellationToken cancellationToken = default);
-    Task<bool> Exists(long id, CancellationToken cancellationToken = default)
+    Task<bool> Exists(long id, CancellationToken cancellationToken = default);
 }

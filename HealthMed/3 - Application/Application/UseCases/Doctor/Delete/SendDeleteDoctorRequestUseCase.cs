@@ -1,21 +1,22 @@
-﻿using Application.UseCases.Doctor.DeletePermanently.Interfaces;
+﻿using Application.UseCases.Doctor.Delete.Interfaces;
 using Application.UseCases.Doctor.Get.Interfaces;
 using ErrorOr;
 using Infra.Services.Messages;
 using System.Text.Json;
 
-namespace Application.UseCases.Doctor.DeletePermanently;
+namespace Application.UseCases.Doctor.Delete;
 
-public class SendDeleteDoctorPermanentlyProcessingUseCase: ISendDeleteDoctorPermanentlyRequestUseCase
+public class SendDeleteDoctorRequestUseCase : ISendDeleteDoctorRequestUseCase
 {
     private readonly IRabbitMqProducerService _rabbitMqService;
     private readonly IGetDoctorUseCase _getDoctorUseCase;
 
-    public SendDeleteDoctorPermanentlyProcessingUseCase(IRabbitMqProducerService rabbitMqProducerService, IGetDoctorUseCase getDoctorUseCase)
+    public SendDeleteDoctorRequestUseCase(IRabbitMqProducerService rabbitMqProducerService, IGetDoctorUseCase getDoctorUseCase)
     {
         _rabbitMqService = rabbitMqProducerService;
         _getDoctorUseCase = getDoctorUseCase;
     }
+
 
     public async Task<Error?> Execute(long id, CancellationToken cancellationToken = default)
     {
@@ -23,7 +24,7 @@ public class SendDeleteDoctorPermanentlyProcessingUseCase: ISendDeleteDoctorPerm
 
         if (!doctor.IsError)
         {
-            _rabbitMqService.SendMessage(JsonSerializer.Serialize(doctor.Value.Id), "delete_permanently_doctor");
+            _rabbitMqService.SendMessage(JsonSerializer.Serialize(doctor.Value.Id), "delete_doctor");
             return null;
         }
 
