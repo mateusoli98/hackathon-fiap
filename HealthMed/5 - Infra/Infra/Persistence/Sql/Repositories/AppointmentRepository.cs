@@ -51,6 +51,15 @@ public class AppointmentRepository : IAppointmentRepository
             query = query.Where(q => q.AppointmentDate.Date == appointmentDate);
         }
 
+        if (filter.StartDate.HasValue)
+        {
+            query = query.Where(q => q.CreatedAt >= filter.StartDate);
+        }
+        if (filter.EndDate.HasValue)
+        {
+            query = query.Where(q => q.CreatedAt <= filter.EndDate);
+        }
+
         var result = await query
             .OrderBy(q => q.CreatedAt)
             .AsNoTracking()
