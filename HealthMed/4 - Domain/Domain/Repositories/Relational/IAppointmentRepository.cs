@@ -12,4 +12,5 @@ public interface IAppointmentRepository
     Task<PaginationResult<Appointments>> SearchAsync(AppointmentFilter filter, CancellationToken cancellationToken = default);
     Task DeleteAsync(Appointments appointment, CancellationToken cancellationToken = default);
     Task PermanentDelete(Appointments appointment, CancellationToken cancellationToken = default);
+    Task<bool> Exists(long doctorId, long patientId, DateTime appointmentDate, CancellationToken cancellationToken);
 }

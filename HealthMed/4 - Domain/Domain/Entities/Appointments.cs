@@ -9,11 +9,8 @@ public class Appointments
     [Key]
     public long Id { get; set; }
     public AppointmentStatus Status { get; set; }
-
     public DateTime AppointmentDate { get; set; }
-
     public DateTime CreatedAt { get; set; }
-
     public DateTime UpdatedAt { get; set; }
     public bool IsEnabled { get; set; }
 

@@ -94,4 +94,17 @@ public class AppointmentRepository : IAppointmentRepository
         _dataContext.Remove(appointment);
         await _dataContext.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<bool> Exists(long doctorId, long patientId, DateTime appointmentDate, CancellationToken cancellationToken)
+    {
+        var query = _dataContext.Appointments.AsQueryable()
+            .Where(q => 
+                       q.Doctor.Id == doctorId
+                    && q.Patient.Id == patientId
+                    && q.AppointmentDate.Date == appointmentDate.Date
+                    && q.IsEnabled == true)
+            .AnyAsync(cancellationToken);
+
+        return await query;
+    }
 }
