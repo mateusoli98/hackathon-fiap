@@ -4,7 +4,7 @@ using ErrorOr;
 
 namespace Application.UseCases.Patient.Search.Interfaces;
 
-public interface ISeachAppointmentUseCase
+public interface ISeachPatientUseCase
 {
-    Task<ErrorOr<PaginationResult<SearchAppointmentResponse>>> Execute(PatientFilter filter, CancellationToken cancellationToken = default);
+    Task<ErrorOr<PaginationResult<SearchPatientResponse>>> Execute(PatientFilter filter, CancellationToken cancellationToken = default);
 }

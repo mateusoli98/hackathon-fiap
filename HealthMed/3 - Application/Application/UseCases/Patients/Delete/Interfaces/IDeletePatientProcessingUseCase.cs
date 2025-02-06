@@ -2,7 +2,7 @@
 
 namespace Application.UseCases.Patient.Delete.Interfaces;
 
-public interface IDeleteAppointmentProcessingUseCase
+public interface IDeletePatientProcessingUseCase
 {
     Task<Error?> Execute(long id, CancellationToken cancellationToken = default);
 }

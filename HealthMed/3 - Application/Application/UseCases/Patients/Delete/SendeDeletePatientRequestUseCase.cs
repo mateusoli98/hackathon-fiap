@@ -1,6 +1,32 @@
-﻿namespace Application.UseCases.Patient.Delete;
+﻿using Application.UseCases.Doctor.Get.Interfaces;
+using Application.UseCases.Patient.Delete.Interfaces;
+using ErrorOr;
+using Infra.Services.Messages;
+using System.Text.Json;
 
-public class SendeAppointmentPatientRequestUseCase
+namespace Application.UseCases.Patient.Delete;
+
+public class SendeDeletePatientRequestUseCase : ISendDeletePatientRequestUseCase
 {
-   
+    private readonly IRabbitMqProducerService _rabbitMqService;
+    private readonly IGetDoctorUseCase _getDoctorUseCase;
+
+    public SendeDeletePatientRequestUseCase(IRabbitMqProducerService rabbitMqProducerService, IGetDoctorUseCase getDoctorUseCase)
+    {
+        _rabbitMqService = rabbitMqProducerService;
+        _getDoctorUseCase = getDoctorUseCase;
+    }
+
+    public async Task<Error?> Execute(long id, CancellationToken cancellationToken = default)
+    {
+        var patient = await _getDoctorUseCase.Execute(id, cancellationToken);
+
+        if (!patient.IsError)
+        {
+            _rabbitMqService.SendMessage(JsonSerializer.Serialize(patient.Value.Id), "delete_patient");
+            return null;
+        }
+
+        return Error.Validation("NotFound", $"Paciente com Id {id} não encontrado. Revise o Id informado ou tente novamente mais tarde");
+    }
 }

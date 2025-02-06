@@ -2,7 +2,7 @@
 
 namespace Application.UseCases.Patient.Create.Commom;
 
-public class CreateAppointmentRequest
+public class CreatePatientRequest
 {
     [Required(ErrorMessage = "O nome é obrigatório.")]
     [StringLength(100, MinimumLength = 3, ErrorMessage = "O nome deve ter entre 3 e 100 caracteres.")]

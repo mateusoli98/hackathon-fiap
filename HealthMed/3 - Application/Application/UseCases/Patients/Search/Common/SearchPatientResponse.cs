@@ -2,7 +2,7 @@
 
 using Domain.Entities;
 
-public class SearchAppointmentResponse
+public class SearchPatientResponse
 {
     public long Id { get; set; }
     public string Name { get; set; } = string.Empty;
@@ -10,9 +10,9 @@ public class SearchAppointmentResponse
     public string Email { get; set; } = string.Empty;
 
 
-    public static SearchAppointmentResponse Create(Patient doctor)
+    public static SearchPatientResponse Create(Patient doctor)
     {
-        return new SearchAppointmentResponse
+        return new SearchPatientResponse
         {
             Id = doctor.Id,
             Name = doctor.Name,

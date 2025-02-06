@@ -6,17 +6,17 @@ using ErrorOr;
 
 namespace Application.UseCases.Patient.Search;
 
-public  class SearchAppointmentUseCase : ISeachAppointmentUseCase
+public  class SearchPatientUseCase : ISeachPatientUseCase
 {
     readonly IPatientRepository _patientRepository;
-    public SearchAppointmentUseCase(IPatientRepository patientRepository)
+    public SearchPatientUseCase(IPatientRepository patientRepository)
     {
         _patientRepository = patientRepository;
     }
-    public async Task<ErrorOr<PaginationResult<SearchAppointmentResponse>>> Execute(PatientFilter filter, CancellationToken cancellationToken = default)
+    public async Task<ErrorOr<PaginationResult<SearchPatientResponse>>> Execute(PatientFilter filter, CancellationToken cancellationToken = default)
     {
         var result = await _patientRepository.SearchAsync(filter, cancellationToken);
 
-        return new PaginationResult<SearchAppointmentResponse>(result.Total, result.Items.Select(item => SearchAppointmentResponse.Create(item)));
+        return new PaginationResult<SearchPatientResponse>(result.Total, result.Items.Select(item => SearchPatientResponse.Create(item)));
     }
 }

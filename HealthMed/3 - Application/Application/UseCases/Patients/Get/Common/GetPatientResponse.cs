@@ -2,7 +2,7 @@
 
 using Domain.Entities;
 
-public class GetAppoitmentResponse
+public class GetPatientResponse
 {
     public long Id { get; set; }
     public string Name { get; set; } = string.Empty;
@@ -10,9 +10,9 @@ public class GetAppoitmentResponse
     public string Email { get; set; } = string.Empty;
 
 
-    public static GetAppoitmentResponse Create(Patient Patient)
+    public static GetPatientResponse Create(Patient Patient)
     {
-        return new GetAppoitmentResponse
+        return new GetPatientResponse
         {
             Id = Patient.Id,
             Name = Patient.Name,
@@ -21,7 +21,7 @@ public class GetAppoitmentResponse
         };
     }
 
-    public static Patient GetPatient(GetAppoitmentResponse response)
+    public static Patient GetPatient(GetPatientResponse response)
     {
         return new Patient
         {

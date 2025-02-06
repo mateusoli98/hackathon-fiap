@@ -4,11 +4,11 @@ using ErrorOr;
 
 namespace Application.UseCases.Patient.Delete;
 
-public class DeleteAppointmentProcessingUseCase : IDeleteAppointmentProcessingUseCase
+public class DeletePatientProcessingUseCase : IDeletePatientProcessingUseCase
 {
     readonly IPatientRepository _patientRepository;
 
-    public DeleteAppointmentProcessingUseCase(IPatientRepository patientRepository)
+    public DeletePatientProcessingUseCase(IPatientRepository patientRepository)
     {
         _patientRepository = patientRepository;
     }

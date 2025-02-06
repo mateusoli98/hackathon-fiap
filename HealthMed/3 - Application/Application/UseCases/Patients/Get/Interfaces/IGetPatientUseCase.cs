@@ -5,5 +5,5 @@ namespace Application.UseCases.Patient.Get.Interfaces;
 
 public interface IGetPatientUseCase
 {
-    Task<ErrorOr<GetAppoitmentResponse>> Execute(long id, CancellationToken cancellationToken = default);
+    Task<ErrorOr<GetPatientResponse>> Execute(long id, CancellationToken cancellationToken = default);
 }

@@ -3,7 +3,7 @@ using ErrorOr;
 
 namespace Application.UseCases.Patient.Update.Interfaces;
 
-public interface ISendUpdateAppointmentRequestUseCase
+public interface ISendUpdatePatientRequestUseCase
 {
-    Task<ErrorOr<UpdateAppointmentResponse>> Execute(string patientId, UpdatePatientRequest request, CancellationToken cancellationToken = default);
+    Task<ErrorOr<UpdatePatientResponse>> Execute(long patientId, UpdatePatientRequest request, CancellationToken cancellationToken = default);
 }

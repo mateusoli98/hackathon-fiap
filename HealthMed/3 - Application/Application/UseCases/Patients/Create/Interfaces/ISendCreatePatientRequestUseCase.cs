@@ -3,8 +3,7 @@
 using Application.UseCases.Patient.Create.Commom;
 using ErrorOr;
 
-
-public interface ISendCreateAppointmentRequestUseCase
+public interface ISendCreatePatientRequestUseCase
 {
-    Task<ErrorOr<CreateAppointmentResponse>> Execute(CreateAppointmentRequest request, CancellationToken cancellationToken = default);
+    Task<ErrorOr<CreatePatientResponse>> Execute(CreatePatientRequest request, CancellationToken cancellationToken = default);
 }

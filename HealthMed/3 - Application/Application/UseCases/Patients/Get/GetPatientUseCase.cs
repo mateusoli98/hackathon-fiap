@@ -14,13 +14,13 @@ public class GetPatientUseCase : IGetPatientUseCase
         _patientRepository = patientRepository;
     }
 
-    public async Task<ErrorOr<GetAppoitmentResponse>> Execute(long id, CancellationToken cancellationToken = default)
+    public async Task<ErrorOr<GetPatientResponse>> Execute(long id, CancellationToken cancellationToken = default)
     {
         var patient = await _patientRepository.GetByIdAsync(id, cancellationToken);
 
         if (patient is not null)
         {
-            return GetAppoitmentResponse.Create(patient);
+            return GetPatientResponse.Create(patient);
         }
 
         return Error.NotFound(description: $"Paciente com id: {id} não encontrado. Revise o Id informado ou tente novamente mais tarde");

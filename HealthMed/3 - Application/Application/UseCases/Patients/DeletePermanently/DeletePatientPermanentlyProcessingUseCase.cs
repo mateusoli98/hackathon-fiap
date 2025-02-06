@@ -3,11 +3,11 @@ using Domain.Repositories.Relational;
 
 namespace Application.UseCases.Patient.DeletePermanently;
 
-public class DeleteAppointmentPermanentlyProcessingUseCase : IDeleteAppointmentPermanentlyProcessingUseCase
+public class DeletePatientPermanentlyProcessingUseCase : IDeletePatientPermanentlyProcessingUseCase
 {
     private readonly IPatientRepository _patientRepository;
 
-    public DeleteAppointmentPermanentlyProcessingUseCase(IPatientRepository patientRepository)
+    public DeletePatientPermanentlyProcessingUseCase(IPatientRepository patientRepository)
     {
         _patientRepository = patientRepository;
     }

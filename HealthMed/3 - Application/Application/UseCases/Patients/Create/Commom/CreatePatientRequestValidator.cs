@@ -2,9 +2,9 @@
 
 namespace Application.UseCases.Patient.Create.Commom;
 
-public class CreateAppointmentRequestValidator : AbstractValidator<CreateAppointmentRequest>
+public class CreatePatientRequestValidator : AbstractValidator<CreatePatientRequest>
 {
-    public CreateAppointmentRequestValidator()
+    public CreatePatientRequestValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("O nome é obrigatório.")

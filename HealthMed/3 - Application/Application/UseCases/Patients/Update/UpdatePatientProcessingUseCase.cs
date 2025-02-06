@@ -4,7 +4,7 @@ using Application.UseCases.Patient.Update.Interfaces;
 using Domain.Repositories.Relational;
 using Domain.Entities;
 
-public class UpdateAppointmentProcessingUseCase(IPatientRepository repository) : IUpdateAppointmentProcessingUseCase
+public class UpdatePatientProcessingUseCase(IPatientRepository repository) : IUpdatePatientProcessingUseCase
 {
     private readonly IPatientRepository _patientRepository = repository;
 
