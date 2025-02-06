@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: healthworker
+  annotations:
+    description: "Deployment para o WORKER de cadastro"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: label-healthworker
+  template:
+    metadata:
+      labels:
+        app: label-healthworker
+    spec:
+      containers:
+      - name: cont-healthworker
+        image: healthworkerv1:latest
+        imagePullPolicy: Never
+        envFrom:
+            - secretRef:
+                name: database-secrets
+            - secretRef:
+                name: rabbitmq-secrets
+            - configMapRef:
+                name: config-rabbitmq
+            - configMapRef:
+                name: config-database
+        env:
+            - name: ASPNETCORE_URLS
+              value: http://*:8082
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "128Mi"
+          limits:
+            cpu: "1000m"
+            memory: "256Mi"
+        ports:
+        - containerPort: 8082

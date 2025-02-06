@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scheduleapi
+  annotations:
+    description: "Deployment para a API de agendamento"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8081"
+      labels:
+        app: label-scheduleapi
+    spec:
+      containers:
+        - name: cont-scheduleapi
+          image: scheduleapiv1:latest
+          imagePullPolicy: Never
+          envFrom:
+            - secretRef:
+                name: database-secrets
+            - secretRef:
+                name: rabbitmq-secrets
+            - configMapRef:
+                name: config-rabbitmq
+            - configMapRef:
+                name: config-database
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://*:8081
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "128Mi"
+            limits:
+              cpu: "1000m"
+              memory: "256Mi"
+          ports:
+            - containerPort: 8081
+  selector:
+    matchLabels:
+      app: label-scheduleapi

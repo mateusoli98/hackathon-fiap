@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WorkerSchedule": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

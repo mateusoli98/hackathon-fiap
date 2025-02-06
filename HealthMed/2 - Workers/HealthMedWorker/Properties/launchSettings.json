@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "HealthMedWorker": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
