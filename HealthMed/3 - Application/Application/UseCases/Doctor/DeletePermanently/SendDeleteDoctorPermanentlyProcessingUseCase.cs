@@ -6,16 +6,10 @@ using System.Text.Json;
 
 namespace Application.UseCases.Doctor.DeletePermanently;
 
-public class SendDeleteDoctorPermanentlyProcessingUseCase: ISendDeleteDoctorPermanentlyRequestUseCase
+public class SendDeleteDoctorPermanentlyProcessingUseCase(IRabbitMqProducerService rabbitMqProducerService, IGetDoctorUseCase getDoctorUseCase) : ISendDeleteDoctorPermanentlyRequestUseCase
 {
-    private readonly IRabbitMqProducerService _rabbitMqService;
-    private readonly IGetDoctorUseCase _getDoctorUseCase;
-
-    public SendDeleteDoctorPermanentlyProcessingUseCase(IRabbitMqProducerService rabbitMqProducerService, IGetDoctorUseCase getDoctorUseCase)
-    {
-        _rabbitMqService = rabbitMqProducerService;
-        _getDoctorUseCase = getDoctorUseCase;
-    }
+    private readonly IRabbitMqProducerService _rabbitMqService = rabbitMqProducerService;
+    private readonly IGetDoctorUseCase _getDoctorUseCase = getDoctorUseCase;
 
     public async Task<Error?> Execute(long id, CancellationToken cancellationToken = default)
     {

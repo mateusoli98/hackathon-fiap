@@ -1,47 +1,53 @@
-﻿namespace Application.UseCases.UpdateDoctor;
-
+﻿using Application.UseCases.Doctor.Update.Common;
 using Application.UseCases.Doctor.Update.Interfaces;
 using Domain.Repositories.Relational;
-using Domain.Entities;
+using CrossCutting.Extensions;
+using ErrorOr;
+
+namespace Application.UseCases.UpdateDoctor;
 
 public class UpdateDoctorProcessingUseCase(IDoctorRepository repository) : IUpdateDoctorProcessingUseCase
 {
     private readonly IDoctorRepository _doctorRepository = repository;
 
-    public async Task Execute(Doctor updatedDoctor, CancellationToken cancellationToken = default)
+    public async Task<ErrorOr<UpdateDoctorResponse>> Execute(long doctorId, UpdateDoctorRequest request, CancellationToken cancellationToken = default)
     {
-        var doctor = await _doctorRepository.GetByIdAsync(updatedDoctor.Id!, cancellationToken);
-
-        if (doctor is null)
+        var validationResult = new UpdateDoctorRequestValidator().Validate(request);
+        if (!validationResult.IsValid)
         {
-            throw new Exception("Médico não encontrado."); ;
+            return validationResult.ToErrorList();
         }
 
-        var alreadyExists = await Validate(doctor, updatedDoctor, cancellationToken);
-        if (!alreadyExists)
+        var doctor = await _doctorRepository.GetByIdAsync(doctorId, cancellationToken);
+        if (doctor is not null)
         {
-            doctor.Name = updatedDoctor.Name;
-            doctor.Email = updatedDoctor.Email;  
-            doctor.CRM = updatedDoctor.CRM;
+            doctor.Name = request.Name;
+            doctor.Email = request.Email;
+            doctor.Specialty = request.Specialty;
 
-            await _doctorRepository.UpdateAsync(doctor, cancellationToken);
+            if (doctor.CRM != request.CRM)
+            {
+                var canUpdateCRM = await Validate(request, cancellationToken);
+                if (canUpdateCRM)
+                {
+                    doctor.CRM = request.CRM;
+                }
+                else
+                {
+                    return Error.Validation("Validation", "CRM informado já está cadastrado.");
+                }
+            }
 
-            return;
+            return new UpdateDoctorResponse
+            {
+                Message = $"Alteração do médico com Id {doctorId} realizado com sucesso."
+            };
         }
 
-        throw new Exception("CRM informado já está cadastrado no sistema.");
+        return Error.Validation("NotFound", $"Médico com id: {doctorId} não encontrado. Revise o Id informado ou tente novamente mais tarde");
+
     }
 
-    private async Task<bool> Validate(Doctor findedDoctor, Doctor updatedDoctor, CancellationToken cancellationToken)
-    {
-        if (updatedDoctor.CRM != findedDoctor.CRM)
-        {
-            var alreadyExists = await _doctorRepository.Exists(updatedDoctor.CRM, cancellationToken);
-
-            return alreadyExists;
-        }
-
-        return true;
-    }
-
+    private async Task<bool> Validate(UpdateDoctorRequest request, CancellationToken cancellationToken) =>
+        await _doctorRepository.Exists(request.CRM, cancellationToken);
 }

@@ -1,9 +1,9 @@
-﻿
-namespace Application.UseCases.Doctor.Update.Interfaces;
+﻿using Application.UseCases.Doctor.Update.Common;
+using ErrorOr;
 
-using Domain.Entities;
+namespace Application.UseCases.Doctor.Update.Interfaces;
 
 public interface IUpdateDoctorProcessingUseCase
 {
-    Task Execute(Doctor doctor, CancellationToken cancellationToken = default);
+    Task<ErrorOr<UpdateDoctorResponse>> Execute(long doctorId, UpdateDoctorRequest request, CancellationToken cancellationToken = default);
 }

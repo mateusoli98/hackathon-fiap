@@ -1,7 +1,9 @@
-﻿namespace Application.UseCases.Doctor.Create.Interfaces;
-using Domain.Entities;
+﻿using Application.UseCases.Doctor.Create.Commom;
+using ErrorOr;
+
+namespace Application.UseCases.Doctor.Create.Interfaces;
 
 public interface ICreateDoctorProcessingUseCase
 {
-    Task Execute(Doctor doctor, CancellationToken cancellationToken = default);
+    Task<ErrorOr<CreateDoctorResponse>> Execute(CreateDoctorRequest request, CancellationToken cancellationToken = default);
 }

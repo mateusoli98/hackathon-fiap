@@ -3,14 +3,9 @@ using Domain.Repositories.Relational;
 
 namespace Application.UseCases.Doctor.DeletePermanently;
 
-public class DeleteDoctorPermanentlyProcessingUseCase : IDeleteDoctorPermanentlyProcessingUseCase
+public class DeleteDoctorPermanentlyProcessingUseCase(IDoctorRepository doctorRepository) : IDeleteDoctorPermanentlyProcessingUseCase
 {
-    private readonly IDoctorRepository _doctorRepository;
-
-    public DeleteDoctorPermanentlyProcessingUseCase(IDoctorRepository doctorRepository)
-    {
-        _doctorRepository = doctorRepository;
-    }
+    private readonly IDoctorRepository _doctorRepository = doctorRepository;
 
     public async Task Execute(long id, CancellationToken cancellationToken = default)
     {
