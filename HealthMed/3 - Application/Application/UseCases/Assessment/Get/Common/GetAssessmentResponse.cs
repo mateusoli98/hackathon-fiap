@@ -1,13 +1,20 @@
 ﻿namespace Application.UseCases.Assessment.Get.Common;
 
 using Domain.Entities;
+using System.Text.Json.Serialization;
 
 public class GetAssessmentResponse
 {
     public long Id { get; set; }
     public string Description { get; set; } = string.Empty;
     public int Rating { get; set; }
+    public bool IsEnable { get; set; }
+
+    [JsonIgnore]
     public DateTime CreatedAt { get; set; }
+    
+    [JsonIgnore]
+    public DateTime UpdatedAt { get; set; }
 
     public static GetAssessmentResponse Create(Assessment appointment)
     {
@@ -16,7 +23,10 @@ public class GetAssessmentResponse
             Id = appointment.Id,
             Description = appointment.Description,
             Rating = appointment.Rating,
-            CreatedAt = appointment.CreatedAt
+            IsEnable = appointment.IsEnabled,
+            CreatedAt = appointment.CreatedAt,
+            UpdatedAt = appointment.UpdatedAt
+
         };
     }
 
@@ -27,7 +37,9 @@ public class GetAssessmentResponse
             Id = response.Id,
             Description = response.Description,
             Rating = response.Rating,
-            CreatedAt = response.CreatedAt
+            IsEnabled = response.IsEnable,
+            CreatedAt = response.CreatedAt,
+            UpdatedAt = response.UpdatedAt,
         };
     }
 }

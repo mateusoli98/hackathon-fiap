@@ -1,25 +1,29 @@
 ﻿namespace Application.UseCases.AppoAssessmentintment.Create;
 
 using Application.UseCases.Assessment.Create.Interfaces;
-using Domain.Repositories.Relational;
 using Domain.Entities;
+using Domain.Repositories.Relational;
 
-public class CreateAppointmentProcessingUseCase(IAppointmentRepository repository) : ICreateAssessmentProcessingUseCase
+public class CreateAssessmentProcessingUseCase : ICreateAssessmentProcessingUseCase
 {
-    private readonly IAppointmentRepository _appointmentRepository = repository;
+    private readonly IAssessmentRepository _assessmentRepository;
 
-    public async Task Execute(Appointments appointment, CancellationToken cancellationToken = default)
+    public CreateAssessmentProcessingUseCase(IAssessmentRepository assessmentRepository)
     {
-        //Console.WriteLine("Validando se o paciente já existe");
-        //var alreadyExists = await _appointmentRepository.Exists(appointment.CPF, cancellationToken);
-        //if (!alreadyExists)
-        //{
-        //    Console.WriteLine($"Salvando paciente '{appointment.Id}'");
-        //    await _appointmentRepository.SaveAsync(appointment, cancellationToken);
-        //    return;
-        //}
+        _assessmentRepository = assessmentRepository;
+    }
 
-        //Console.WriteLine("Erro: paciente já existe no banco de dados");
-        throw new Exception("Avaliação já cadastrado anteriormente no sistema.");
+    public async Task Execute(Assessment assessment, CancellationToken cancellationToken = default)
+    {
+        Console.WriteLine("Validando se a avaliação já existe");
+        var alreadyExists = await _assessmentRepository.Exists(assessment.Doctor.Id, assessment.Patient.Id, cancellationToken);
+        if (!alreadyExists)
+        {
+            Console.WriteLine($"Salvando avaliação '{assessment.Id}'");
+            await _assessmentRepository.SaveAsync(assessment, cancellationToken);
+            return;
+        }
+
+        throw new Exception($"Erro: a avaliação já existe no banco de dados");
     }
 }

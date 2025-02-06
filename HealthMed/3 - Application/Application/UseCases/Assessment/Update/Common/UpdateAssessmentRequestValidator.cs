@@ -7,7 +7,7 @@ namespace Application.UseCases.Assessment.Common
     {
         public UpdateAssessmentRequestValidator()
         {
-           
+            
         }
     }
 }

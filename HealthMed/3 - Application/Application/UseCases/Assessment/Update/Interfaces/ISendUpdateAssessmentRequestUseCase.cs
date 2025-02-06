@@ -6,5 +6,5 @@ namespace Application.UseCases.Assessment.Interfaces;
 
 public interface ISendUpdateAssessmentRequestUseCase
 {
-    Task<ErrorOr<UpdateAssessmentResponse>> Execute(string assessmentId, UpdateAssessmentRequest request, CancellationToken cancellationToken = default);
+    Task<ErrorOr<UpdateAssessmentResponse>> Execute(long assessmentId, UpdateAssessmentRequest request, CancellationToken cancellationToken = default);
 }
