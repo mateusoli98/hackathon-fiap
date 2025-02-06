@@ -10,6 +10,9 @@ public class GetAppoitmentResponse
     public DateTime AppointmentDate { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+    public bool IsEnabled { get; set; }
+    public Doctor Doctor { get; set; }
+    public Patient Patient { get; set; }
 
 
     public static GetAppoitmentResponse Create(Appointments appointment)
