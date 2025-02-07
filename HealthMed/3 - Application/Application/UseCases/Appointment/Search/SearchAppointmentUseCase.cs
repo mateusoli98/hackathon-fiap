@@ -6,7 +6,7 @@ using ErrorOr;
 
 namespace Application.Appointment.Search.Search;
 
-public  class SearchAppointmentUseCase : ISeachAppointmentUseCase
+public  class SearchAppointmentUseCase : ISearchAppointmentUseCase
 {
     readonly IAppointmentRepository _appointmentRepository;
     public SearchAppointmentUseCase(IAppointmentRepository appointmentRepository)

@@ -1,4 +1,4 @@
-﻿using Application.UseCases.Assessment.DeletePermanently.Interfaces;
+﻿using Application.UseCases.Assessment.Delete.Interfaces;
 using Application.UseCases.Assessment.Get.Interfaces;
 using ErrorOr;
 using Infra.Services.Messages;
@@ -6,12 +6,12 @@ using System.Text.Json;
 
 namespace Application.UseCases.Assessment.Delete;
 
-public class SendDeleteAssessmentPermanentlyProcessingUseCase : ISendDeleteAssessmentPermanentlyRequestUseCase
+public class SendDeleteAssessmentRequestUseCase : ISendDeleteAssessmentRequestUseCase
 {
     private readonly IRabbitMqProducerService _rabbitMqService;
     private readonly IGetAssessmentUseCase _getAssessmentUseCase;
 
-    public SendDeleteAssessmentPermanentlyProcessingUseCase(IRabbitMqProducerService rabbitMqProducerService, IGetAssessmentUseCase getAssessmentUseCase)
+    public SendDeleteAssessmentRequestUseCase(IRabbitMqProducerService rabbitMqProducerService, IGetAssessmentUseCase getAssessmentUseCase)
     {
         _rabbitMqService = rabbitMqProducerService;
         _getAssessmentUseCase = getAssessmentUseCase;
@@ -23,7 +23,7 @@ public class SendDeleteAssessmentPermanentlyProcessingUseCase : ISendDeleteAsses
 
         if (!assessment.IsError)
         {
-            _rabbitMqService.SendMessage(JsonSerializer.Serialize(assessment.Value.Id), "delete_permanently_assessment");
+            _rabbitMqService.SendMessage(JsonSerializer.Serialize(assessment.Value.Id), "delete_assessment");
             return null;
         }
 

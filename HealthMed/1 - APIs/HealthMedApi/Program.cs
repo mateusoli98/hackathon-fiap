@@ -1,7 +1,3 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,6 +6,43 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Assessments
+builder.Services.AddSingleton<IAssessmentRepository, AssessmentRepository>();
+builder.Services.AddSingleton<IGetAssessmentUseCase, GetAssessmentUseCase>();
+builder.Services.AddSingleton<ISearchAssessmentUseCase, SearchAssessmentUseCase>();
+builder.Services.AddSingleton<ICreateAssessmentProcessingUseCase, CreateAssessmentProcessingUseCase>();
+builder.Services.AddScoped<ISendCreateAssessmentRequestUseCase, SendCreateAssessmentRequestUseCase>();
+builder.Services.AddSingleton<IUpdateAssessmentProcessingUseCase, UpdateAssessmentProcessingUseCase>();
+builder.Services.AddScoped<ISendUpdateAssessmentRequestUseCase, SendUpdateAssessmentRequestUseCase>();
+builder.Services.AddSingleton<IDeleteAssessmentProcessingUseCase, DeleteAssessmentProcessingUseCase>();
+builder.Services.AddScoped<ISendDeleteAssessmentRequestUseCase, SendDeleteAssessmentRequestUseCase>();
+builder.Services.AddSingleton<IDeleteAssessmentPermanentlyProcessingUseCase, DeleteAssessmentPermanentlyProcessingUseCase>();
+builder.Services.AddScoped<ISendDeleteAssessmentPermanentlyRequestUseCase, SendDeleteAssessmentPermanentlyProcessingUseCase>();
+
+// Doctors
+builder.Services.AddSingleton<IDoctorRepository, DoctorRepository>();
+builder.Services.AddSingleton<IGetDoctorUseCase, GetDoctorUseCase>();
+builder.Services.AddSingleton<ISearchDoctorUseCase, SearchDoctorUseCase>();
+builder.Services.AddSingleton<ICreateDoctorProcessingUseCase, CreateDoctorProcessingUseCase>();
+builder.Services.AddSingleton<IUpdateDoctorProcessingUseCase, UpdateDoctorProcessingUseCase>();
+builder.Services.AddSingleton<IDeleteDoctorProcessingUseCase, DeleteDoctorProcessingUseCase>();
+builder.Services.AddScoped<ISendDeleteDoctorRequestUseCase, SendDeleteDoctorRequestUseCase>();
+builder.Services.AddSingleton<IDeleteDoctorPermanentlyProcessingUseCase, DeleteDoctorPermanentlyProcessingUseCase>();
+builder.Services.AddScoped<ISendDeleteDoctorPermanentlyRequestUseCase, SendDeleteDoctorPermanentlyProcessingUseCase>();
+
+// Patient
+builder.Services.AddSingleton<IPatientRepository, PatientRepository>();
+builder.Services.AddSingleton<IGetPatientUseCase, GetPatientUseCase>();
+builder.Services.AddSingleton<ISearchPatientUseCase, SearchPatientUseCase>();
+builder.Services.AddSingleton<ICreatePatientProcessingUseCase, CreatePatientProcessingUseCase>();
+builder.Services.AddScoped<ISendCreatePatientRequestUseCase, SendCreatePatientRequestUseCase>();
+builder.Services.AddSingleton<IUpdatePatientProcessingUseCase, UpdatePatientProcessingUseCase>();
+builder.Services.AddScoped<ISendUpdatePatientRequestUseCase, SendUpdatePatientRequestUseCase>();
+builder.Services.AddSingleton<IDeletePatientProcessingUseCase, DeletePatientProcessingUseCase>();
+builder.Services.AddScoped<ISendDeletePatientRequestUseCase, SendDeletePatientRequestUseCase>();
+builder.Services.AddSingleton<IDeletePatientPermanentlyProcessingUseCase, DeletePatientPermanentlyProcessingUseCase>();
+builder.Services.AddScoped<ISendDeletePatientPermanentlyProcessingUseCase, SendDeletePatientPermanentlyProcessingUseCase>();
 
 // JWT config
 builder.Services.AddAuthentication(options =>

@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Infra.Persistence.Sql.Repositories;
 
-public class AssessmentRepository: IAssessmentRepository
+public class AssessmentRepository : IAssessmentRepository
 {
     private readonly DataContext _dataContext;
 
@@ -26,10 +26,13 @@ public class AssessmentRepository: IAssessmentRepository
         return await query;
     }
 
-    public async Task<bool> Exists(long id, CancellationToken cancellationToken = default)
+    public async Task<bool> Exists(long doctorId, long patientId, CancellationToken cancellationToken = default)
     {
         var query = _dataContext.Assessment.AsQueryable()
-            .Where(q => q.Id == id && q.IsEnabled == true)
+            .Where(q =>
+                        q.Doctor.Id == doctorId
+                        && q.Patient.Id == patientId
+                        && q.IsEnabled == true)
             .AnyAsync(cancellationToken);
         return await query;
     }
@@ -45,7 +48,7 @@ public class AssessmentRepository: IAssessmentRepository
         {
             query = query.Where(q => q.Doctor.Id == filter.Doctor.Id);
         }
-       
+
         if (filter.StartDate.HasValue)
         {
             query = query.Where(q => q.CreatedAt >= filter.StartDate);

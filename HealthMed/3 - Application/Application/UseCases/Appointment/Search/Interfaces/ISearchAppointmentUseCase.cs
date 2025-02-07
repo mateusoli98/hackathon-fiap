@@ -4,7 +4,7 @@ using ErrorOr;
 
 namespace Application.UseCases.Appointment.Search.Interfaces;
 
-public interface ISeachAppointmentUseCase
+public interface ISearchAppointmentUseCase
 {
     Task<ErrorOr<PaginationResult<SearchAppointmentResponse>>> Execute(AppointmentFilter filter, CancellationToken cancellationToken = default);
 }
