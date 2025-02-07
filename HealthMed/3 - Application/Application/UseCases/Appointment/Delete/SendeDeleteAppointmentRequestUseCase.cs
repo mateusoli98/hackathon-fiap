@@ -6,12 +6,12 @@ using System.Text.Json;
 
 namespace Application.UseCases.Appointment.Delete;
 
-public class SendeDeleteAppointmentRequestUseCase : ISendDeleteAppointmentRequestUseCase
+public class SendDeleteAppointmentRequestUseCase : ISendDeleteAppointmentRequestUseCase
 {
     private readonly IRabbitMqProducerService _rabbitMqService;
     private readonly IGetAppointmentUseCase _getAppointmentUseCase;
 
-    public SendeDeleteAppointmentRequestUseCase(IRabbitMqProducerService rabbitMqProducerService, IGetAppointmentUseCase getAppoitmentUseCase)
+    public SendDeleteAppointmentRequestUseCase(IRabbitMqProducerService rabbitMqProducerService, IGetAppointmentUseCase getAppoitmentUseCase)
     {
         _rabbitMqService = rabbitMqProducerService;
         _getAppointmentUseCase = getAppoitmentUseCase;

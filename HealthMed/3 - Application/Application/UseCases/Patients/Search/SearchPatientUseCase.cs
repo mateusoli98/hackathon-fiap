@@ -6,7 +6,7 @@ using ErrorOr;
 
 namespace Application.UseCases.Patient.Search;
 
-public  class SearchPatientUseCase : ISeachPatientUseCase
+public  class SearchPatientUseCase : ISearchPatientUseCase
 {
     readonly IPatientRepository _patientRepository;
     public SearchPatientUseCase(IPatientRepository patientRepository)

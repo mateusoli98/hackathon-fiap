@@ -6,12 +6,12 @@ using System.Text.Json;
 
 namespace Application.UseCases.Patient.Delete;
 
-public class SendeDeletePatientRequestUseCase : ISendDeletePatientRequestUseCase
+public class SendDeletePatientRequestUseCase : ISendDeletePatientRequestUseCase
 {
     private readonly IRabbitMqProducerService _rabbitMqService;
     private readonly IGetDoctorUseCase _getDoctorUseCase;
 
-    public SendeDeletePatientRequestUseCase(IRabbitMqProducerService rabbitMqProducerService, IGetDoctorUseCase getDoctorUseCase)
+    public SendDeletePatientRequestUseCase(IRabbitMqProducerService rabbitMqProducerService, IGetDoctorUseCase getDoctorUseCase)
     {
         _rabbitMqService = rabbitMqProducerService;
         _getDoctorUseCase = getDoctorUseCase;

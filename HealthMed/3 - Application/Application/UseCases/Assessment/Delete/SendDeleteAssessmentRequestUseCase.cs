@@ -6,12 +6,12 @@ using System.Text.Json;
 
 namespace Application.UseCases.Assessment.Delete;
 
-public class SendeDeleteAssessmentRequestUseCase : ISendDeleteAssessmentRequestUseCase
+public class SendDeleteAssessmentRequestUseCase : ISendDeleteAssessmentRequestUseCase
 {
     private readonly IRabbitMqProducerService _rabbitMqService;
     private readonly IGetAssessmentUseCase _getAssessmentUseCase;
 
-    public SendeDeleteAssessmentRequestUseCase(IRabbitMqProducerService rabbitMqProducerService, IGetAssessmentUseCase getAssessmentUseCase)
+    public SendDeleteAssessmentRequestUseCase(IRabbitMqProducerService rabbitMqProducerService, IGetAssessmentUseCase getAssessmentUseCase)
     {
         _rabbitMqService = rabbitMqProducerService;
         _getAssessmentUseCase = getAssessmentUseCase;

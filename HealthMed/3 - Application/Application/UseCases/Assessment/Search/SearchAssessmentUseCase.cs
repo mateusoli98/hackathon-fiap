@@ -6,7 +6,7 @@ using ErrorOr;
 
 namespace Application.Assessment.Search.Search;
 
-public  class SearchAssessmentUseCase : ISeachAssessmentUseCase
+public  class SearchAssessmentUseCase : ISearchAssessmentUseCase
 {
     readonly IAssessmentRepository _assessmentRepository;
     public SearchAssessmentUseCase(IAssessmentRepository assessmentRepository)
