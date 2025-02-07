@@ -1,47 +1,40 @@
 ﻿namespace Application.UseCases.Patient.Update;
 
+using Application.UseCases.Patient.Update.Common;
 using Application.UseCases.Patient.Update.Interfaces;
 using Domain.Repositories.Relational;
-using Domain.Entities;
+using CrossCutting.Extensions;
+using ErrorOr;
 
 public class UpdatePatientProcessingUseCase(IPatientRepository repository) : IUpdatePatientProcessingUseCase
 {
     private readonly IPatientRepository _patientRepository = repository;
 
-    public async Task Execute(Patient updatedPatient, CancellationToken cancellationToken = default)
+    public async Task<ErrorOr<UpdatePatientResponse>> Execute(long patientId, UpdatePatientRequest request, CancellationToken cancellationToken = default)
     {
-        var patient = await _patientRepository.GetByIdAsync(updatedPatient.Id!, cancellationToken);
-
-        if (patient is null)
+        var validationResult = new UpdatePatientRequestValidator().Validate(request);
+        if (!validationResult.IsValid)
         {
-            throw new Exception("Paciente não encontrado."); ;
+            return validationResult.ToErrorList();
         }
 
-        var alreadyExists = await Validate(patient, updatedPatient, cancellationToken);
-        if (!alreadyExists)
+        var patient = await _patientRepository.GetByIdAsync(patientId, cancellationToken);
+        if (patient is not null)
         {
-            patient.Name = updatedPatient.Name;
-            patient.Email = updatedPatient.Email;  
-            patient.CPF = updatedPatient.CPF;
+            patient.Id = patientId;
+            patient.Name = request.Name;
+            patient.Email = request.Email;
+            patient.CPF = request.CPF;
 
-            await _patientRepository.UpdateAsync(patient, cancellationToken);
+           await _patientRepository.UpdateAsync(patient, cancellationToken);
 
-            return;
+            return new UpdatePatientResponse
+            {
+                Message = $"Paciente com Id {patientId} atualizado com sucesso."
+            };
         }
 
-        throw new Exception("CPF informado já está cadastrado no sistema.");
-    }
-
-    private async Task<bool> Validate(Patient findedPatient, Patient updatedPatient, CancellationToken cancellationToken)
-    {
-        if (updatedPatient.CPF != findedPatient.CPF)
-        {
-            var alreadyExists = await _patientRepository.Exists(updatedPatient.CPF, cancellationToken);
-
-            return alreadyExists;
-        }
-
-        return true;
+        return Error.Validation("NotFound", $"Paciente com id: {patientId} não encontrado. Revise o Id informado ou tente novamente mais tarde");
     }
 
 }

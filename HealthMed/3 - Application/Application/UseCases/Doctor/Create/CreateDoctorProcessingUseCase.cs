@@ -28,7 +28,7 @@ public class CreateDoctorProcessingUseCase(IDoctorRepository repository) : ICrea
                 CRM = request.CRM,
                 Specialty = request.Specialty,
                 Email = request.Email,
-                Password = request.Password,
+                Password = request.Password.HashPassword(),
                 IsEnabled = true,
                 CreatedAt = DateTime.UtcNow
             };

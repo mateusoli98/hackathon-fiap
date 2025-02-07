@@ -81,5 +81,13 @@ public class PatientRepository: IPatientRepository
     {
         _dataContext.Patients.Remove(patient);
         await _dataContext.SaveChangesAsync(cancellationToken);
-    }   
+    }
+
+    public async Task<Patient?> GetByEmail(string email, CancellationToken cancellationToken = default, bool isEnabled = true)
+    {
+        var query = _dataContext.Patients.AsQueryable()
+            .Where(q => q.Email == email && q.IsEnabled == isEnabled)
+            .FirstOrDefaultAsync(cancellationToken);
+        return await query;
+    }
 }

@@ -1,9 +1,10 @@
 ﻿
 namespace Application.UseCases.Patient.Update.Interfaces;
 
-using Domain.Entities;
+using Application.UseCases.Patient.Update.Common;
+using ErrorOr;
 
 public interface IUpdatePatientProcessingUseCase
 {
-    Task Execute(Patient patient, CancellationToken cancellationToken = default);
+    Task<ErrorOr<UpdatePatientResponse>> Execute(long patientId, UpdatePatientRequest request, CancellationToken cancellationToken = default);
 }

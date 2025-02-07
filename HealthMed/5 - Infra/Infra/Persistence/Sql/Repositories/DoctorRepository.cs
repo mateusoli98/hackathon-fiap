@@ -89,4 +89,13 @@ public class DoctorRepository : IDoctorRepository
         _dataContext.Remove(doctor);
         await _dataContext.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<Doctor?> GetByCRM(string crm, CancellationToken cancellationToken = default, bool isEnabled = true)
+    {
+        var query = _dataContext.Doctors.AsQueryable()
+            .Where(q => q.CRM == crm && q.IsEnabled == isEnabled)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return await query;
+    }
 }

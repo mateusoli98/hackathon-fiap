@@ -1,7 +1,9 @@
 ﻿namespace Application.UseCases.Patient.Create.Interfaces;
-using Domain.Entities;
+
+using Application.UseCases.Patient.Create.Commom;
+using ErrorOr;
 
 public interface ICreatePatientProcessingUseCase
 {
-    Task Execute(Patient patient, CancellationToken cancellationToken = default);
+    Task<ErrorOr<CreatePatientResponse>> Execute(CreatePatientRequest request, CancellationToken cancellationToken = default);
 }
