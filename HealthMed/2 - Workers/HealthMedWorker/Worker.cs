@@ -51,11 +51,17 @@ public class Worker
         {
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
-            var doctorId = JsonSerializer.Deserialize<string>(message) ?? throw new Exception("Erro ao deserializar mensagem");
+            var doctorId = JsonSerializer.Deserialize<long?>(message) ?? throw new Exception("Erro ao deserializar mensagem");
             Console.WriteLine($"Iniciando processamento do médico '{doctorId}'");
 
-            deleteDoctorProcessingUseCase.Execute(doctorId);
-            
+            if (isPermanently)
+            {
+                _deleteDoctorPermanentlyProcessingUseCase.Execute(doctorId);
+            }
+            else
+            {
+                _deleteDoctorProcessingUseCase.Execute(doctorId);
+            }
         };
 
         _channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
@@ -72,9 +78,17 @@ public class Worker
         {
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
-            var patientId = JsonSerializer.Deserialize<string>(message) ?? throw new Exception("Erro ao deserializar mensagem");
+            var patientId = JsonSerializer.Deserialize<long?>(message) ?? throw new Exception("Erro ao deserializar mensagem");
             Console.WriteLine($"Iniciando processamento do paciente '{patientId}'");
-            _deletePatientProcessingUseCase.Execute(patientId!);
+
+            if (isPermanently)
+            {
+                _deletePatientPermanentlyProcessingUseCase.Execute(patientId!);
+            }
+            else
+            {
+                _deletePatientProcessingUseCase.Execute(patientId!);
+            }           
         };
 
         _channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);

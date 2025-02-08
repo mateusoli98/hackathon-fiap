@@ -1,23 +1,39 @@
-﻿using Infra.Services.Messages;
+﻿using Application.UseCases.Appointment.Delete.Interfaces;
+using Application.UseCases.Appointment.DeletePermanently.Interfaces;
+using Infra.Services.Messages;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 using System.Text.Json;
-using Domain.Entities;
-using RabbitMQ.Client;
-using Application.UseCases.Appointment.Delete.Interfaces;
 
 
 namespace ScheduleWorker;
 
-public class Worker(IDeleteAppointmentProcessingUseCase usecase, IRabbitMqProducerService rabbitMqProducerService) : IHostedService
+public class Worker(
+    IDeleteAppointmentProcessingUseCase deleteAppointmentProcessingUseCase, 
+    IDeleteAppointmentPermanentlyProcessingUseCase deleteAppointmentPermanentlyProcessingUseCase, 
+    IRabbitMqProducerService rabbitMqProducerService
+    ) : IHostedService
 {
-    private readonly IDeleteAppointmentProcessingUseCase _useCase = usecase;
+    private readonly IDeleteAppointmentProcessingUseCase _deleteAppointmentProcessingUseCase = deleteAppointmentProcessingUseCase;
+    private readonly IDeleteAppointmentPermanentlyProcessingUseCase _deleteAppointmentPermanentlyProcessingUseCase = deleteAppointmentPermanentlyProcessingUseCase;
     public readonly IRabbitMqProducerService _rabbitMqProducerService = rabbitMqProducerService;
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
+        DeleteAppointment();
+        DeleteAppointment(true);
+
+        return Task.CompletedTask;
+    }
+
+    private void DeleteAppointment(bool isPermanently = false)
+    {
         (_, var _channel) = _rabbitMqProducerService.GetConnectionAndChannel();
-        _rabbitMqProducerService.DeclareQueue("delete_appointment");
+
+        var queueName = isPermanently ? "delete_permanently_appointment" : "delete_appointment";
+
+        _rabbitMqProducerService.DeclareQueue(queueName);
 
         var consumer = new EventingBasicConsumer(_channel);
         consumer.Received += (model, ea) =>
@@ -25,15 +41,21 @@ public class Worker(IDeleteAppointmentProcessingUseCase usecase, IRabbitMqProduc
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
 
-            var appointmentId = JsonSerializer.Deserialize<string>(message) ?? throw new Exception("Erro ao deserializar mensagem");
+            var appointmentId = JsonSerializer.Deserialize<long?>(message) ?? throw new Exception("Erro ao deserializar mensagem");
 
             Console.WriteLine($"Iniciando processamento para cancelar consulta '{appointmentId}'");
-            _useCase.Execute(appointmentId!);
+
+            if (isPermanently)
+            {
+                _deleteAppointmentPermanentlyProcessingUseCase.Execute(appointmentId!);
+            }
+            else
+            {
+                _deleteAppointmentProcessingUseCase.Execute(appointmentId!);
+            }
         };
 
         _channel.BasicConsume(queue: "delete_appointment", autoAck: true, consumer: consumer);
-
-        return Task.CompletedTask;
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
