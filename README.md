@@ -1,1 +1,2 @@
-![architecture_healthmed](https://github.com/user-attachments/assets/ef4b56d0-4ea7-4e79-bbc7-1a12bd3e57a2)
+
+![architecture_healthmed](https://github.com/user-attachments/assets/0a04b3e3-845b-496a-92ea-f379d0c454c6)
