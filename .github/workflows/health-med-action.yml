@@ -18,10 +18,10 @@ jobs:
          dotnet-version: 8.0.300
          
       - name: Restore Dependencies
-        run: cd Contact && dotnet restore
+        run: cd HealthMed && dotnet restore
         
       - name: Build
-        run: cd Contact && dotnet build --no-restore
+        run: cd HealthMed && dotnet build --no-restore
   
       - name: HealthMedAPI - Build the Docker image
         run: docker build --no-cache -t healthmedapiv1 -f "1 - APIs/HealthMedAPI/Dockerfile" .
