@@ -25,8 +25,8 @@ jobs:
   
       - name: Docker Build - HealthMedAPI
         working-directory: ./HealthMed
-        run: docker build --no-cache -t healthmedapiv1 -f './1 - APIs/HealthMedAPI/Dockerfile' .
+        run: docker build -t healthmedapiv1 -f './1 - APIs/HealthMedAPI/Dockerfile' .
       - name: Docker Build - ScheduleAPI
         working-directory: ./HealthMed
-        run: docker build --no-cache -t scheduleapiv1 -f './1 - APIs/ScheduleAPI/Dockerfile' .
+        run: docker build -t scheduleapiv1 -f './1 - APIs/ScheduleAPI/Dockerfile' .
       
