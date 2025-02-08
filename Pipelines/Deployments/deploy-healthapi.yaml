@@ -11,13 +11,13 @@ spec:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: /metrics
-        prometheus.io/port: "8080"
+        prometheus.io/port: "8085"
       labels:
         app: label-healthapi
     spec:
       containers:
       - name: cont-healthapi
-        image: healthapiapiv1:latest
+        image: healthmedapiapiv1:latest
         imagePullPolicy: Never
         envFrom:
             - secretRef:
@@ -30,7 +30,7 @@ spec:
                 name: config-database
         env:
             - name: ASPNETCORE_URLS
-              value: http://*:8080
+              value: http://*:8085
         resources:
           requests:
             cpu: "500m"
@@ -39,7 +39,7 @@ spec:
             cpu: "1000m"
             memory: "256Mi"
         ports:
-        - containerPort: 8080
+        - containerPort: 8085
   selector:
     matchLabels:
       app: label-healthapi

@@ -1,30 +1,30 @@
-# See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-# This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
+USER app
 WORKDIR /app
-EXPOSE 8080
+EXPOSE 8085
 
-ENV ASPNETCORE_URLS=http://+:8000;http://+:8080;
+ENV ASPNETCORE_URLS=http://+:8005;http://+:8085;
 ENV ASPNETCORE_ENVIRONMENT=Development
 
-# This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["1 - APIs/HealthMedApi/HealthMedApi.csproj", "1 - APIs/HealthMedApi/"]
+COPY ["3 - Application/Application/Application.csproj", "3 - Application/Application/"]
+COPY ["4 - Domain/Domain/Domain.csproj", "4 - Domain/Domain/"]
+COPY ["5 - Infra/Infra/Infra.csproj", "5 - Infra/Infra/"]
+COPY ["6 - CrossCutting/CrossCutting/CrossCutting.csproj", "6 - CrossCutting/CrossCutting/"]
 RUN dotnet restore "./1 - APIs/HealthMedApi/HealthMedApi.csproj"
 COPY . .
 WORKDIR "/src/1 - APIs/HealthMedApi"
 RUN dotnet build "./HealthMedApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./HealthMedApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
