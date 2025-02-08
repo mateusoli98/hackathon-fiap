@@ -1,16 +1,43 @@
-﻿namespace HealthMedWorker;
+﻿using Application.UseCases.Doctor.Delete.Interfaces;
+using Application.UseCases.Doctor.DeletePermanently.Interfaces;
+using Application.UseCases.Patient.Delete.Interfaces;
+using Application.UseCases.Patient.DeletePermanently.Interfaces;
+using Infra.Services.Messages;
+
+namespace HealthMedWorker;
 
 public class Worker
-    (IUseCase usecase,
-    IRabbitMqProducerService rabbitMqProducerService) : IHostedService
+    (
+    IDeleteDoctorProcessingUseCase deleteDoctorProcessingUseCase,
+    IDeleteDoctorPermanentlyProcessingUseCase deleteDoctorPermanentlyProcessingUseCase,
+    IDeletePatientProcessingUseCase deletePatientProcessingUseCase,
+    IDeletePatientPermanentlyProcessingUseCase deletePatientPermanentlyProcessingUseCase,
+    IRabbitMqProducerService rabbitMqProducerService
+    ) : IHostedService
 {
-    private readonly ICreateContactProcessingUseCase _useCase = usecase;
+    private readonly IDeleteDoctorProcessingUseCase _deleteDoctorProcessingUseCase = deleteDoctorProcessingUseCase;
+    private readonly IDeleteDoctorPermanentlyProcessingUseCase _deleteDoctorPermanentlyProcessingUseCase = deleteDoctorPermanentlyProcessingUseCase;
+    private readonly IDeletePatientProcessingUseCase _deletePatientProcessingUseCase = deletePatientProcessingUseCase;
+    private readonly IDeletePatientPermanentlyProcessingUseCase _deletePatientPermanentlyProcessingUseCase = deletePatientPermanentlyProcessingUseCase;
     private readonly IRabbitMqProducerService _rabbitMqProducerService = rabbitMqProducerService;
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
         (_, var _channel) = _rabbitMqProducerService.GetConnectionAndChannel();
-        _rabbitMqProducerService.DeclareQueue("delete_contact");
+
+        DeleteDoctor();
+        DeleteDoctor(true);
+        DeletePatient();
+        DeletePatient(true);
+
+        return Task.CompletedTask;
+    }
+
+    private void DeleteDoctor(bool isPermanently = false)
+    {
+        var queueName = isPermanently ? "delete_permanently_doctor" : "delete_doctor";
+
+        _rabbitMqProducerService.DeclareQueue(queueName);
 
         var consumer = new EventingBasicConsumer(_channel);
         consumer.Received += (model, ea) =>
@@ -18,15 +45,30 @@ public class Worker
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
 
-            var contact = JsonSerializer.Deserialize<Contact>(message) ?? throw new Exception("Erro ao deserializar mensagem");
+            var doctorId = JsonSerializer.Deserialize<long>(message) ?? throw new Exception("Erro ao deserializar mensagem");
 
-            Console.WriteLine($"Iniciando processamento do usuário '{contact?.Id}'");
-            _useCase.Execute(contact!);
+            Console.WriteLine($"Iniciando processamento do médico '{doctorId}'");
+            _deleteDoctorProcessingUseCase.Execute(doctorId!);
         };
 
-        _channel.BasicConsume(queue: "create_contact", autoAck: true, consumer: consumer);
+        _channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
+    }
 
-        return Task.CompletedTask;
+    private void DeletePatient(bool isPermanently = false)
+    {
+        var queueName = isPermanently ? "delete_permanently_patient" : "delete_patient";
+        _rabbitMqProducerService.DeclareQueue(queueName);
+        var consumer = new EventingBasicConsumer(_channel);
+        consumer.Received += (model, ea) =>
+        {
+            var body = ea.Body.ToArray();
+            var message = Encoding.UTF8.GetString(body);
+            var patientId = JsonSerializer.Deserialize<long>(message) ?? throw new Exception("Erro ao deserializar mensagem");
+            Console.WriteLine($"Iniciando processamento do paciente '{patientId}'");
+            _deletePatientProcessingUseCase.Execute(patientId!);
+        };
+
+        _channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

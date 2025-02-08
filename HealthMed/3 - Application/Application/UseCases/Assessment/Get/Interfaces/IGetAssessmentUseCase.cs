@@ -6,5 +6,4 @@ namespace Application.UseCases.Assessment.Get.Interfaces;
 public interface IGetAssessmentUseCase
 {
     Task<ErrorOr<GetAssessmentResponse>> Execute(long id, CancellationToken cancellationToken = default);
-    Task<bool> Exists(long doctorId, long patientId, CancellationToken cancellationToken);
 }

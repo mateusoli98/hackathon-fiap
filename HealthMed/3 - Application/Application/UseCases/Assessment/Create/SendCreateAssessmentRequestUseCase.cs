@@ -1,6 +1,5 @@
 ﻿using Application.UseCases.Assessment.Create.Commom;
 using Application.UseCases.Assessment.Create.Interfaces;
-using Application.UseCases.Assessment.Get.Interfaces;
 using Application.UseCases.Doctor.Get.Interfaces;
 using Application.UseCases.Patient.Get.Interfaces;
 using CrossCutting.Extensions;
@@ -13,24 +12,25 @@ namespace Application.UseCases.Assessment.Create;
 using Application.UseCases.Doctor.Get.Common;
 using Application.UseCases.Patient.Get.Common;
 using Domain.Entities;
+using Domain.Repositories.Relational;
 
 public class SendCreateAssessmentRequestUseCase : ISendCreateAssessmentRequestUseCase
 {
     private readonly IRabbitMqProducerService _rabbitMqService;
-    private readonly IGetAssessmentUseCase _getAssessmentUseCase;
     private readonly IGetDoctorUseCase _getDoctorUseCase;
     private readonly IGetPatientUseCase _getPatientUseCase;
+    private readonly IAssessmentRepository _assessmentRepository;
 
     public SendCreateAssessmentRequestUseCase(
         IRabbitMqProducerService rabbitMqProducerService,
-        IGetAssessmentUseCase getAssessmentUseCase,
         IGetDoctorUseCase getDoctorUseCase,
-        IGetPatientUseCase getPatientUseCase)
+        IGetPatientUseCase getPatientUseCase,
+        IAssessmentRepository assessmentRepository)
     {
         _rabbitMqService = rabbitMqProducerService;
-        _getAssessmentUseCase = getAssessmentUseCase;
         _getDoctorUseCase = getDoctorUseCase;
         _getPatientUseCase = getPatientUseCase;
+        _assessmentRepository = assessmentRepository;
     }
 
     public async Task<ErrorOr<CreateAssessmentResponse>> Execute(CreateAssessmentRequest request, CancellationToken cancellationToken = default)
@@ -53,7 +53,7 @@ public class SendCreateAssessmentRequestUseCase : ISendCreateAssessmentRequestUs
             return Error.Validation("NotFound", $"Paciente com id: {request.PatientId} não encontrado. Revise o Id informado ou tente novamente mais tarde");
         }
 
-        var alreadyExists = await _getAssessmentUseCase.Exists(request.DoctorId, request.PatientId, cancellationToken);
+        var alreadyExists = await _assessmentRepository.Exists(request.DoctorId, request.PatientId, cancellationToken);
         if (!alreadyExists)
         {
             var assessment = new Assessment()

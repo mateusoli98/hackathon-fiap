@@ -23,7 +23,7 @@ public class SendDeletePatientPermanentlyProcessingUseCase : ISendDeletePatientP
 
         if (!patient.IsError)
         {
-            _rabbitMqService.SendMessage(JsonSerializer.Serialize(patient.Value.Id), "delete_permanetly_patient");
+            _rabbitMqService.SendMessage(JsonSerializer.Serialize(patient.Value.Id), "delete_permanently_patient");
             return null;
         }
 
