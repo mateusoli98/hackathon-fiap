@@ -38,6 +38,8 @@ public class UpdateDoctorProcessingUseCase(IDoctorRepository repository) : IUpda
                 }
             }
 
+            await _doctorRepository.UpdateAsync(doctor);
+
             return new UpdateDoctorResponse
             {
                 Message = $"Alteração do médico com Id {doctorId} realizado com sucesso."

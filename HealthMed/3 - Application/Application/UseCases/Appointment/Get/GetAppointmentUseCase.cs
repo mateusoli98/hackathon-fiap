@@ -14,13 +14,13 @@ public class GetAppointmentUseCase : IGetAppointmentUseCase
         _appointmentRepository = appointmentRepository;
     }
 
-    public async Task<ErrorOr<GetAppoitmentResponse>> Execute(long id, CancellationToken cancellationToken = default)
+    public async Task<ErrorOr<GetAppointmentResponse>> Execute(long id, CancellationToken cancellationToken = default)
     {
         var appointment = await _appointmentRepository.GetByIdAsync(id, cancellationToken);
 
         if (appointment is not null)
         {
-            return GetAppoitmentResponse.Create(appointment);
+            return GetAppointmentResponse.Create(appointment);
         }
 
         return Error.NotFound(description: $"Agendamento com id: {id} não encontrado. Revise o Id informado ou tente novamente mais tarde");

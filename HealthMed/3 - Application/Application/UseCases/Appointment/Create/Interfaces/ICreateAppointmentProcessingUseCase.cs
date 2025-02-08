@@ -1,7 +1,9 @@
 ﻿namespace Application.UseCases.Appointment.Create.Interfaces;
-using Domain.Entities;
+
+using Application.UseCases.Appointment.Create.Commom;
+using ErrorOr;
 
 public interface ICreateAppointmentProcessingUseCase
 {
-    Task Execute(Appointments appointments, CancellationToken cancellationToken = default);
+    Task<ErrorOr<CreateAppointmentResponse>> Execute(CreateAppointmentRequest appointments, CancellationToken cancellationToken = default);
 }

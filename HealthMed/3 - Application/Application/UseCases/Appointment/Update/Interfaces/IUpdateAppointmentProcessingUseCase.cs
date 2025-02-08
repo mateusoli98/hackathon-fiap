@@ -1,9 +1,10 @@
-﻿
-namespace Application.UseCases.Appointment.Interfaces;
+﻿using Application.Appointment.Update.Common;
+using Application.UseCases.Appointment.Common;
+using ErrorOr;
 
-using Domain.Entities;
+namespace Application.UseCases.Appointment.Interfaces;
 
 public interface IUpdateAppointmentProcessingUseCase
 {
-    Task Execute(Appointments appointment, CancellationToken cancellationToken = default);
+    Task<ErrorOr<UpdateAppointmentResponse>> Execute(long id, UpdateAppointmentRequest appointment, CancellationToken cancellationToken = default);
 }

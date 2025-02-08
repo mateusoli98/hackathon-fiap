@@ -5,5 +5,5 @@ namespace Application.UseCases.Appointment.Get.Interfaces;
 
 public interface IGetAppointmentUseCase
 {
-    Task<ErrorOr<GetAppoitmentResponse>> Execute(long id, CancellationToken cancellationToken = default);
+    Task<ErrorOr<GetAppointmentResponse>> Execute(long id, CancellationToken cancellationToken = default);
 }

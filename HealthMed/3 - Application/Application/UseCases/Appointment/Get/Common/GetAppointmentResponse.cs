@@ -3,7 +3,7 @@
 using Domain.DomainObjects.Enums;
 using Domain.Entities;
 
-public class GetAppoitmentResponse
+public class GetAppointmentResponse
 {
     public long Id { get; set; }
     public AppointmentStatus Status { get; set; }
@@ -15,9 +15,9 @@ public class GetAppoitmentResponse
     public Patient Patient { get; set; }
 
 
-    public static GetAppoitmentResponse Create(Appointments appointment)
+    public static GetAppointmentResponse Create(Appointments appointment)
     {
-        return new GetAppoitmentResponse
+        return new GetAppointmentResponse
         {
             Id = appointment.Id,
             Status = appointment.Status,
@@ -27,7 +27,7 @@ public class GetAppoitmentResponse
         };
     }
 
-    public static Appointments GetAppointment(GetAppoitmentResponse response)
+    public static Appointments GetAppointment(GetAppointmentResponse response)
     {
         return new Appointments
         {
