@@ -13,6 +13,7 @@ public  class SearchDoctorUseCase : ISearchDoctorUseCase
     {
         _doctorRepository = doctorRepository;
     }
+
     public async Task<ErrorOr<PaginationResult<SearchDoctorResponse>>> Execute(DoctorFilter filter, CancellationToken cancellationToken = default)
     {
         var result = await _doctorRepository.SearchAsync(filter, cancellationToken);

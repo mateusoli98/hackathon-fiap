@@ -5,9 +5,12 @@ using Application.UseCases.Doctor.DeletePermanently.Interfaces;
 using Application.UseCases.Doctor.Get.Common;
 using Application.UseCases.Doctor.Get.Interfaces;
 using Application.UseCases.Doctor.Login;
+using Application.UseCases.Doctor.Search.Common;
+using Application.UseCases.Doctor.Search.Interfaces;
 using Application.UseCases.Doctor.Update.Common;
 using Application.UseCases.Doctor.Update.Interfaces;
 using CreateAPI.Controllers;
+using Domain.DomainObjects.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -19,29 +22,37 @@ using LoginRequest = Application.UseCases.Doctor.Login.LoginRequest;
 
 namespace HealthMedApi.Controllers.v1;
 
-[Route("api/doctor")]
+[Route("api/[controller]")]
 [ApiController]
 public class DoctorContoller(
     ICreateDoctorProcessingUseCase createDoctorProcessingUseCase,
     IGetDoctorUseCase getDoctorUseCase,
+    ISearchDoctorUseCase searchDoctorUseCase,
     IUpdateDoctorProcessingUseCase updateDoctorProcessingUseCase,
     ISendDeleteDoctorRequestUseCase deleteDoctorProcessingUseCase,
     ISendDeleteDoctorPermanentlyRequestUseCase deleteDoctorPermanentlyUsecase,
-    IPatientLoginUsecase doctorLoginUsecase,
+    IDoctorLoginUsecase doctorLoginUsecase,
     IConfiguration configuration) : BaseController
 {
     private readonly ICreateDoctorProcessingUseCase _createDoctorProcessingUsecase = createDoctorProcessingUseCase;
     private readonly IGetDoctorUseCase _getDoctorUsecase = getDoctorUseCase;
+    private readonly ISearchDoctorUseCase _searchDoctorUse = searchDoctorUseCase;
     private readonly IUpdateDoctorProcessingUseCase _updateDoctorProcessingUseCase = updateDoctorProcessingUseCase;
     private readonly ISendDeleteDoctorRequestUseCase _deleteDoctorProcessingUseCase = deleteDoctorProcessingUseCase;
     private readonly ISendDeleteDoctorPermanentlyRequestUseCase _deleteDoctorPermanentlyUsecase = deleteDoctorPermanentlyUsecase;
-    private readonly IPatientLoginUsecase _doctorLoginUsecase = doctorLoginUsecase;
+    private readonly IDoctorLoginUsecase _doctorLoginUsecase = doctorLoginUsecase;
     private readonly IConfiguration _configuration = configuration;
 
     [HttpPost]
     public async Task<ActionResult<CreateDoctorResponse>> CreateDoctor([FromBody] CreateDoctorRequest request)
     {
         return await Result(_createDoctorProcessingUsecase.Execute(request));
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<PaginationResult<SearchDoctorResponse>>> GetDoctors([FromQuery] DoctorFilter filter)
+    {
+        return await Result(_searchDoctorUse.Execute(filter));
     }
 
     [HttpGet("{id}")]
@@ -94,7 +105,7 @@ public class DoctorContoller(
             new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt-Doctor:Key"]));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt-Doctor:Key"]!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(

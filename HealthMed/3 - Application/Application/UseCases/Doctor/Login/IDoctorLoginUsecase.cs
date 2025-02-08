@@ -2,7 +2,7 @@
 
 namespace Application.UseCases.Doctor.Login;
 
-public interface IPatientLoginUsecase
+public interface IDoctorLoginUsecase
 {
     Task<GetDoctorResponse?> ValidateCredentialsAsync(LoginRequest loginRequest);
 }

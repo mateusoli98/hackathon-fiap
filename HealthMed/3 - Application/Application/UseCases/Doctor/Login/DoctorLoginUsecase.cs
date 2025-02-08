@@ -4,7 +4,7 @@ using Application.UseCases.Doctor.Get.Common;
 
 namespace Application.UseCases.Doctor.Login;
 
-public class PatientLoginUsecase(IDoctorRepository doctorRepository) : IPatientLoginUsecase
+public class PatientLoginUsecase(IDoctorRepository doctorRepository) : IDoctorLoginUsecase
 {
     private readonly IDoctorRepository _doctorRepository = doctorRepository;
 
