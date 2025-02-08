@@ -1,14 +1,23 @@
-﻿namespace ScheduleWorker;
+﻿using Infra.Services.Messages;
+using RabbitMQ.Client.Events;
+using System.Text;
+using System.Text.Json;
+using Domain.Entities;
+using RabbitMQ.Client;
+using Application.UseCases.Appointment.Delete.Interfaces;
 
-public class Worker(ICreateContactProcessingUseCase usecase, IRabbitMqProducerService rabbitMqProducerService) : IHostedService
+
+namespace ScheduleWorker;
+
+public class Worker(IDeleteAppointmentProcessingUseCase usecase, IRabbitMqProducerService rabbitMqProducerService) : IHostedService
 {
-    private readonly ICasoDeUso _useCase = usecase;
-    private readonly IRabbitMqProducerService _rabbitMqProducerService = rabbitMqProducerService;
+    private readonly IDeleteAppointmentProcessingUseCase _useCase = usecase;
+    public readonly IRabbitMqProducerService _rabbitMqProducerService = rabbitMqProducerService;
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
         (_, var _channel) = _rabbitMqProducerService.GetConnectionAndChannel();
-        _rabbitMqProducerService.DeclareQueue("create_contact");
+        _rabbitMqProducerService.DeclareQueue("delete_appointment");
 
         var consumer = new EventingBasicConsumer(_channel);
         consumer.Received += (model, ea) =>
@@ -16,13 +25,13 @@ public class Worker(ICreateContactProcessingUseCase usecase, IRabbitMqProducerSe
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
 
-            var contact = JsonSerializer.Deserialize<Contact>(message) ?? throw new Exception("Erro ao deserializar mensagem");
+            var appointmentId = JsonSerializer.Deserialize<string>(message) ?? throw new Exception("Erro ao deserializar mensagem");
 
-            Console.WriteLine($"Iniciando processamento do usuário '{contact?.Id}'");
-            _useCase.Execute(contact!);
+            Console.WriteLine($"Iniciando processamento para cancelar consulta '{appointmentId}'");
+            _useCase.Execute(appointmentId!);
         };
 
-        _channel.BasicConsume(queue: "create_contact", autoAck: true, consumer: consumer);
+        _channel.BasicConsume(queue: "delete_appointment", autoAck: true, consumer: consumer);
 
         return Task.CompletedTask;
     }

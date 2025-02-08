@@ -1,4 +1,5 @@
-﻿using ErrorOr;
+﻿using Domain.Entities;
+using ErrorOr;
 
 namespace Application.UseCases.Appointment.Delete.Interfaces;
 

@@ -3,6 +3,11 @@ using Application.UseCases.Doctor.DeletePermanently.Interfaces;
 using Application.UseCases.Patient.Delete.Interfaces;
 using Application.UseCases.Patient.DeletePermanently.Interfaces;
 using Infra.Services.Messages;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Text;
+using System.Text.Json;
+
 
 namespace HealthMedWorker;
 
@@ -35,6 +40,8 @@ public class Worker
 
     private void DeleteDoctor(bool isPermanently = false)
     {
+        (_, var _channel) = _rabbitMqProducerService.GetConnectionAndChannel();
+
         var queueName = isPermanently ? "delete_permanently_doctor" : "delete_doctor";
 
         _rabbitMqProducerService.DeclareQueue(queueName);
@@ -44,11 +51,11 @@ public class Worker
         {
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
-
-            var doctorId = JsonSerializer.Deserialize<long>(message) ?? throw new Exception("Erro ao deserializar mensagem");
-
+            var doctorId = JsonSerializer.Deserialize<string>(message) ?? throw new Exception("Erro ao deserializar mensagem");
             Console.WriteLine($"Iniciando processamento do médico '{doctorId}'");
-            _deleteDoctorProcessingUseCase.Execute(doctorId!);
+
+            deleteDoctorProcessingUseCase.Execute(doctorId);
+            
         };
 
         _channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
@@ -56,6 +63,8 @@ public class Worker
 
     private void DeletePatient(bool isPermanently = false)
     {
+        (_, var _channel) = _rabbitMqProducerService.GetConnectionAndChannel();
+
         var queueName = isPermanently ? "delete_permanently_patient" : "delete_patient";
         _rabbitMqProducerService.DeclareQueue(queueName);
         var consumer = new EventingBasicConsumer(_channel);
@@ -63,7 +72,7 @@ public class Worker
         {
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
-            var patientId = JsonSerializer.Deserialize<long>(message) ?? throw new Exception("Erro ao deserializar mensagem");
+            var patientId = JsonSerializer.Deserialize<string>(message) ?? throw new Exception("Erro ao deserializar mensagem");
             Console.WriteLine($"Iniciando processamento do paciente '{patientId}'");
             _deletePatientProcessingUseCase.Execute(patientId!);
         };
