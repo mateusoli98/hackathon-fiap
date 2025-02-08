@@ -82,7 +82,7 @@ public class PatientController(
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult> Login([FromBody] LoginRequest loginRequest)
+    public async Task<ActionResult> Login([FromBody] PatientLoginRequest loginRequest)
     {
         var result = await _patientLoginUsecase.ValidateCredentialsAsync(loginRequest);
         if (result is null)

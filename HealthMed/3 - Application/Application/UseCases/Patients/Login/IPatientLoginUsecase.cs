@@ -4,5 +4,5 @@ namespace Application.UseCases.Patient.Login;
 
 public interface IPatientLoginUsecase
 {
-    Task<GetPatientResponse?> ValidateCredentialsAsync(LoginRequest loginRequest);
+    Task<GetPatientResponse?> ValidateCredentialsAsync(PatientLoginRequest loginRequest);
 }

@@ -18,7 +18,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
-using LoginRequest = Application.UseCases.Doctor.Login.LoginRequest;
 
 namespace HealthMedApi.Controllers.v1;
 
@@ -84,7 +83,7 @@ public class DoctorContoller(
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult> Login([FromBody] LoginRequest loginRequest)
+    public async Task<ActionResult> Login([FromBody] DoctorLoginRequest loginRequest)
     {
         var result = await _doctorLoginUsecase.ValidateCredentialsAsync(loginRequest);
         if (result is null)

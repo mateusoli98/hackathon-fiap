@@ -8,7 +8,7 @@ public class PatientLoginUsecase(IDoctorRepository doctorRepository) : IDoctorLo
 {
     private readonly IDoctorRepository _doctorRepository = doctorRepository;
 
-    public async Task<GetDoctorResponse?> ValidateCredentialsAsync(LoginRequest loginRequest)
+    public async Task<GetDoctorResponse?> ValidateCredentialsAsync(DoctorLoginRequest loginRequest)
     {
         // Obter o médico pelo CRM
         var doctor = await _doctorRepository.GetByCRM(loginRequest.Crm);

@@ -12,6 +12,11 @@ using Application.UseCases.Appointment.Search.Interfaces;
 using Application.UseCases.Appointment;
 using Domain.Repositories.Relational;
 using Infra.Persistence.Sql.Repositories;
+using Infra.Services.Messages;
+using Application.UseCases.Doctor.Get.Interfaces;
+using Application.UseCases.Doctor.Get;
+using Application.UseCases.Patient.Get.Interfaces;
+using Application.UseCases.Patient.Get;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,18 +27,29 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// RabbitMQ
+builder.Services.AddSingleton<IRabbitMqProducerService, RabbitMqProducerService>();
+
 // Appointments
 builder.Services.AddSingleton<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddSingleton<IGetAppointmentUseCase, GetAppointmentUseCase>();
 builder.Services.AddSingleton<ISearchAppointmentUseCase, SearchAppointmentUseCase>();
 builder.Services.AddSingleton<ICreateAppointmentProcessingUseCase, CreateAppointmentProcessingUseCase>();
-builder.Services.AddScoped<ISendCreateAppointmentRequestUseCase, SendCreateAppointmentRequestUseCase>();
+builder.Services.AddSingleton<ISendCreateAppointmentRequestUseCase, SendCreateAppointmentRequestUseCase>();
 builder.Services.AddSingleton<IUpdateAppointmentProcessingUseCase, UpdateAppointmentProcessingUseCase>();
-builder.Services.AddScoped<ISendUpdateAppointmentRequestUseCase, SendUpdateAppointmentRequestUseCase>();
+builder.Services.AddSingleton<ISendUpdateAppointmentRequestUseCase, SendUpdateAppointmentRequestUseCase>();
 builder.Services.AddSingleton<IDeleteAppointmentProcessingUseCase, DeleteAppointmentProcessingUseCase>();
-builder.Services.AddScoped<ISendDeleteAppointmentRequestUseCase, SendDeleteAppointmentRequestUseCase>();
+builder.Services.AddSingleton<ISendDeleteAppointmentRequestUseCase, SendDeleteAppointmentRequestUseCase>();
 builder.Services.AddSingleton<IDeleteAppointmentPermanentlyProcessingUseCase, DeleteAppointmentPermanentlyProcessingUseCase>();
-builder.Services.AddScoped<ISendDeleteAppointmentPermanentlyRequestUseCase, SendDeleteAppointmentPermanentlyProcessingUseCase>();
+builder.Services.AddSingleton<ISendDeleteAppointmentPermanentlyRequestUseCase, SendDeleteAppointmentPermanentlyProcessingUseCase>();
+
+// Doctor
+builder.Services.AddSingleton<IDoctorRepository, DoctorRepository>();
+builder.Services.AddSingleton<IGetDoctorUseCase, GetDoctorUseCase>();
+
+// Patient
+builder.Services.AddSingleton<IPatientRepository, PatientRepository>();
+builder.Services.AddSingleton<IGetPatientUseCase, GetPatientUseCase>();
 
 var app = builder.Build();
 
