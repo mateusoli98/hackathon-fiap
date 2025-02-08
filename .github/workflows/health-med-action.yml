@@ -24,7 +24,9 @@ jobs:
         run: cd HealthMed && dotnet build --no-restore
   
       - name: Docker Build - HealthMedAPI
-        run: docker build -t healthmedapiv1 -f "HealthMed/1 - APIs/HealthMedApi/Dockerfile" .
+        working-directory: ./HealthMed
+        run: docker build -t healthmedapiv1 -f "1 - APIs/HealthMedApi/Dockerfile" .
       - name: Docker Build - ScheduleAPI
-        run: docker build -t scheduleapiv1 -f 'HealthMed/1 - APIs/ScheduleApi/Dockerfile' .
+        working-directory: ./HealthMed
+        run: docker build -t scheduleapiv1 -f "1 - APIs/ScheduleApi/Dockerfile" .
       
