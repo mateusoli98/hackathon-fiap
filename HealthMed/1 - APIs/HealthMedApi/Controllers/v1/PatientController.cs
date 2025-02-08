@@ -5,9 +5,12 @@ using Application.UseCases.Patient.DeletePermanently.Interfaces;
 using Application.UseCases.Patient.Get.Common;
 using Application.UseCases.Patient.Get.Interfaces;
 using Application.UseCases.Patient.Login;
+using Application.UseCases.Patient.Search.Common;
+using Application.UseCases.Patient.Search.Interfaces;
 using Application.UseCases.Patient.Update.Common;
 using Application.UseCases.Patient.Update.Interfaces;
 using CreateAPI.Controllers;
+using Domain.DomainObjects.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -18,40 +21,37 @@ using System.Text;
 
 namespace HealthMedApi.Controllers.v1;
 
-[Route("api/patient")]
+[Route("api/[controller]")]
 [ApiController]
-public class PatientController : BaseController
+public class PatientController(
+    ICreatePatientProcessingUseCase createPatientProcessingUseCase,
+    IGetPatientUseCase getPatientUseCase,
+    ISearchPatientUseCase searchPatientUseCase,
+    IUpdatePatientProcessingUseCase updatePatientProcessingUseCase,
+    ISendDeletePatientRequestUseCase deletePatientProcessingUseCase,
+    ISendDeletePatientPermanentlyProcessingUseCase deletePatientPermanentlyUsecase,
+    IPatientLoginUsecase patientLoginUsecase,
+    IConfiguration configuration) : BaseController
 {
-    private readonly ICreatePatientProcessingUseCase _createPatientProcessingUsecase;
-    private readonly IGetPatientUseCase _getPatientUsecase;
-    private readonly IUpdatePatientProcessingUseCase _updatePatientProcessingUseCase;
-    private readonly ISendDeletePatientRequestUseCase _deletePatientProcessingUseCase;
-    private readonly ISendDeletePatientPermanentlyProcessingUseCase _deletePatientPermanentlyUsecase;
-    private readonly IPatientLoginUsecase _patientLoginUsecase;
-    private readonly IConfiguration _configuration;
-
-    public PatientController(
-        ICreatePatientProcessingUseCase createPatientProcessingUseCase,
-        IGetPatientUseCase getPatientUseCase,
-        IUpdatePatientProcessingUseCase updatePatientProcessingUseCase,
-        ISendDeletePatientRequestUseCase deletePatientProcessingUseCase,
-        ISendDeletePatientPermanentlyProcessingUseCase deletePatientPermanentlyUsecase,
-        IPatientLoginUsecase patientLoginUsecase,
-        IConfiguration configuration)
-    {
-        _createPatientProcessingUsecase = createPatientProcessingUseCase;
-        _getPatientUsecase = getPatientUseCase;
-        _updatePatientProcessingUseCase = updatePatientProcessingUseCase;
-        _deletePatientProcessingUseCase = deletePatientProcessingUseCase;
-        _deletePatientPermanentlyUsecase = deletePatientPermanentlyUsecase;
-        _patientLoginUsecase = patientLoginUsecase;
-        _configuration = configuration;
-    }
+    private readonly ICreatePatientProcessingUseCase _createPatientProcessingUsecase = createPatientProcessingUseCase;
+    private readonly IGetPatientUseCase _getPatientUsecase = getPatientUseCase;
+    private readonly ISearchPatientUseCase _searchPatientUseCase = searchPatientUseCase;
+    private readonly IUpdatePatientProcessingUseCase _updatePatientProcessingUseCase = updatePatientProcessingUseCase;
+    private readonly ISendDeletePatientRequestUseCase _deletePatientProcessingUseCase = deletePatientProcessingUseCase;
+    private readonly ISendDeletePatientPermanentlyProcessingUseCase _deletePatientPermanentlyUsecase = deletePatientPermanentlyUsecase;
+    private readonly IPatientLoginUsecase _patientLoginUsecase = patientLoginUsecase;
+    private readonly IConfiguration _configuration = configuration;
 
     [HttpPost]
     public async Task<ActionResult<CreatePatientResponse>> CreatePatient([FromBody] CreatePatientRequest request)
     {
         return await Result(_createPatientProcessingUsecase.Execute(request));
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<PaginationResult<SearchPatientResponse>>> GetPatients([FromQuery] PatientFilter filter)
+    {
+        return await Result(_searchPatientUseCase.Execute(filter));
     }
 
     [HttpGet("{id}")]
@@ -104,7 +104,7 @@ public class PatientController : BaseController
             new Claim(ClaimTypes.Role, "Patient")
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt-Patient:Key"]));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt-Patient:Key"]!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
