@@ -17,25 +17,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - CrossCutting", "6 - Cro
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7 - Tests", "7 - Tests", "{844DD4D6-65E5-4D66-9A92-20E53226B0D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthMedApi", "1 - APIs\HealthMedApi\HealthMedApi.csproj", "{10079B56-7CB9-4EA3-9394-4E10A02ED03A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthMedApi", "1 - APIs\HealthMedApi\HealthMedApi.csproj", "{10079B56-7CB9-4EA3-9394-4E10A02ED03A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleApi", "1 - APIs\ScheduleApi\ScheduleApi.csproj", "{9768D6B1-A3CE-44A5-8A18-7C7A908C3AF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleApi", "1 - APIs\ScheduleApi\ScheduleApi.csproj", "{9768D6B1-A3CE-44A5-8A18-7C7A908C3AF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthMedWorker", "2 - Workers\HealthMedWorker\HealthMedWorker.csproj", "{5A3C9679-D151-445C-8325-E286452D075C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthMedWorker", "2 - Workers\HealthMedWorker\HealthMedWorker.csproj", "{5A3C9679-D151-445C-8325-E286452D075C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleWorker", "2 - Workers\ScheduleWorker\ScheduleWorker.csproj", "{C4ACD0D3-4B10-429C-A335-576D9C33F5B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleWorker", "2 - Workers\ScheduleWorker\ScheduleWorker.csproj", "{C4ACD0D3-4B10-429C-A335-576D9C33F5B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "3 - Application\Application\Application.csproj", "{6E784427-6CEC-45E8-A56C-0C314274360C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "3 - Application\Application\Application.csproj", "{6E784427-6CEC-45E8-A56C-0C314274360C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "4 - Domain\Domain\Domain.csproj", "{AD5BCE3B-42D6-4D68-8D56-5AB25D49EC8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "4 - Domain\Domain\Domain.csproj", "{AD5BCE3B-42D6-4D68-8D56-5AB25D49EC8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra", "5 - Infra\Infra\Infra.csproj", "{1F747B3F-1AFF-40E8-9F2D-05DF4F599C95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra", "5 - Infra\Infra\Infra.csproj", "{1F747B3F-1AFF-40E8-9F2D-05DF4F599C95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossCutting", "6 - CrossCutting\CrossCutting\CrossCutting.csproj", "{D0ABBEF0-912C-4DC1-A181-B486104A778D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrossCutting", "6 - CrossCutting\CrossCutting\CrossCutting.csproj", "{D0ABBEF0-912C-4DC1-A181-B486104A778D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "7 - Tests\UnitTests\UnitTests.csproj", "{01E604A9-1F63-42E8-AB22-997B8BC0A637}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "7 - Tests\UnitTests\UnitTests.csproj", "{01E604A9-1F63-42E8-AB22-997B8BC0A637}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "7 - Tests\IntegrationTests\IntegrationTests.csproj", "{7D3E1B7C-219A-4775-8155-5B9A461C0E6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "7 - Tests\IntegrationTests\IntegrationTests.csproj", "{7D3E1B7C-219A-4775-8155-5B9A461C0E6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

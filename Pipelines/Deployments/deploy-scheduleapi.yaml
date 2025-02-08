@@ -11,7 +11,7 @@ spec:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: /metrics
-        prometheus.io/port: "8081"
+        prometheus.io/port: "8082"
       labels:
         app: label-scheduleapi
     spec:
@@ -30,7 +30,7 @@ spec:
                 name: config-database
           env:
             - name: ASPNETCORE_URLS
-              value: http://*:8081
+              value: http://*:8082
           resources:
             requests:
               cpu: "500m"
@@ -39,7 +39,7 @@ spec:
               cpu: "1000m"
               memory: "256Mi"
           ports:
-            - containerPort: 8081
+            - containerPort: 8082
   selector:
     matchLabels:
       app: label-scheduleapi

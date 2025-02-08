@@ -3,9 +3,9 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 8085
+EXPOSE 8081
 
-ENV ASPNETCORE_URLS=http://+:8005;http://+:8085;
+ENV ASPNETCORE_URLS=http://+:8001;http://+:8081;
 ENV ASPNETCORE_ENVIRONMENT=Development
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build

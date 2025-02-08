@@ -9,6 +9,6 @@ spec:
   selector:
     app: label-healthapi
   ports:
-  - port: 8085
+  - port: 8081
     nodePort: 30020
     

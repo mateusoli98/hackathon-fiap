@@ -11,15 +11,15 @@ spec:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: /metrics
-        prometheus.io/port: "8085"
+        prometheus.io/port: "8081"
       labels:
         app: label-healthapi
     spec:
       containers:
-      - name: cont-healthapi
-        image: healthmedapiapiv1:latest
-        imagePullPolicy: Never
-        envFrom:
+        - name: cont-healthapimed
+          image: healthmedapiv1:latest
+          imagePullPolicy: Never
+          envFrom:
             - secretRef:
                 name: database-secrets
             - secretRef:
@@ -28,18 +28,18 @@ spec:
                 name: config-rabbitmq
             - configMapRef:
                 name: config-database
-        env:
+          env:
             - name: ASPNETCORE_URLS
-              value: http://*:8085
-        resources:
-          requests:
-            cpu: "500m"
-            memory: "128Mi"
-          limits:
-            cpu: "1000m"
-            memory: "256Mi"
-        ports:
-        - containerPort: 8085
+              value: http://*:8081
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "128Mi"
+            limits:
+              cpu: "1000m"
+              memory: "256Mi"
+          ports:
+            - containerPort: 8081
   selector:
     matchLabels:
       app: label-healthapi
