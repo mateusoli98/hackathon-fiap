@@ -9,7 +9,7 @@ spec:
   selector:
     app: label-healthworker
   ports:
-  - port: 8082
+  - port: 8084
     nodePort: 30022
     
     

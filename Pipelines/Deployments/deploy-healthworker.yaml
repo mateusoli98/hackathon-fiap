@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: cont-healthworker
-        image: healthworkerv1:latest
+        image: healthmedworkerv1:latest
         imagePullPolicy: Never
         envFrom:
             - secretRef:
@@ -29,7 +29,7 @@ spec:
                 name: config-database
         env:
             - name: ASPNETCORE_URLS
-              value: http://*:8082
+              value: http://*:8084
         resources:
           requests:
             cpu: "500m"
@@ -38,4 +38,4 @@ spec:
             cpu: "1000m"
             memory: "256Mi"
         ports:
-        - containerPort: 8082
+        - containerPort: 8084
