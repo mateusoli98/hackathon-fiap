@@ -36,3 +36,25 @@ Google Meetings.
 kubectl apply -R -f .
 
 ```
+
+### RabbitMQ
+
+- Instalando o Helm: https://helm.sh/pt/docs/intro/install/
+
+- Execute os comandos:
+```shell
+    helm repo add bitnami https://charts.bitnami.com/bitnami
+    helm repo update 
+    helm upgrade --install rabbitmq --set auth.username=guest --set auth.password=guest bitnami/rabbitmq
+```
+
+- Para acessar o RabbitMQ
+```shell
+    kubectl port-forward --namespace default svc/rabbitmq 5672:5672
+    kubectl port-forward --namespace default svc/rabbitmq 15672:15672
+```
+
+# Acessar APIs
+
+- HealthMedAPI: http://localhost:30020/swagger/index.html
+- ScheduleAPI: http://localhost:30020/swagger/index.html
