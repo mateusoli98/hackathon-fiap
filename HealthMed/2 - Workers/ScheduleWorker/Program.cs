@@ -1,4 +1,8 @@
-﻿using Domain.Repositories.Relational;
+﻿using Application.UseCases.Appointment.Delete;
+using Application.UseCases.Appointment.Delete.Interfaces;
+using Application.UseCases.Appointment.DeletePermanently;
+using Application.UseCases.Appointment.DeletePermanently.Interfaces;
+using Domain.Repositories.Relational;
 using Infra.Migrations;
 using Infra.Persistence.Sql.Context;
 using Infra.Persistence.Sql.Repositories;
@@ -25,6 +29,8 @@ public class Program
         builder.Services.AddSingleton<IAppointmentRepository, AppointmentRepository>();
         builder.Services.AddSingleton<IDoctorRepository, DoctorRepository>();
         builder.Services.AddSingleton<IPatientRepository, PatientRepository>();
+        builder.Services.AddSingleton<IDeleteAppointmentProcessingUseCase, DeleteAppointmentProcessingUseCase>();
+        builder.Services.AddSingleton<IDeleteAppointmentPermanentlyProcessingUseCase, DeleteAppointmentPermanentlyProcessingUseCase>();
 
         builder.Services.AddSingleton<IRabbitMqProducerService, RabbitMqProducerService>();
 

@@ -2,6 +2,10 @@
 using Application.UseCases.Doctor.Delete.Interfaces;
 using Application.UseCases.Doctor.DeletePermanently;
 using Application.UseCases.Doctor.DeletePermanently.Interfaces;
+using Application.UseCases.Patient.Delete;
+using Application.UseCases.Patient.Delete.Interfaces;
+using Application.UseCases.Patient.DeletePermanently;
+using Application.UseCases.Patient.DeletePermanently.Interfaces;
 using Domain.Repositories.Relational;
 using Infra.Migrations;
 using Infra.Persistence.Sql.Context;
@@ -30,6 +34,8 @@ public class Program
         
         builder.Services.AddSingleton<IDeleteDoctorProcessingUseCase, DeleteDoctorProcessingUseCase>();
         builder.Services.AddSingleton<IDeleteDoctorPermanentlyProcessingUseCase, DeleteDoctorPermanentlyProcessingUseCase>();
+        builder.Services.AddSingleton<IDeletePatientProcessingUseCase, DeletePatientProcessingUseCase>();
+        builder.Services.AddSingleton<IDeletePatientPermanentlyProcessingUseCase, DeletePatientPermanentlyProcessingUseCase>();
 
         builder.Services.AddSingleton<IRabbitMqProducerService, RabbitMqProducerService>();
         
