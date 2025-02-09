@@ -5,6 +5,11 @@ oferece a possibilidade de agendamento de consultas e realização de consultas
 online (Telemedicina) por meio de sistemas terceiros como Google Agenda e
 Google Meetings.
 
+# Grupo - 17
+- Mateus Oliveira - RM355320
+- Renan Ferreira - RM353185
+- Thiago Matos - RM355947
+
 ## Arquitetura utilizada
 
 ![architecture_healthmed](https://github.com/user-attachments/assets/0a04b3e3-845b-496a-92ea-f379d0c454c6)
