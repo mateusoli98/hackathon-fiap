@@ -56,7 +56,7 @@ jobs:
         run: dotnet build HealthMed --no-restore
       
       - name: Upload Docker Image as Artifact       
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: docker_images
           path: ./HealthMed/docker_images/*.tar 
