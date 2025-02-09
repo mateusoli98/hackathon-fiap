@@ -57,4 +57,4 @@ kubectl apply -R -f .
 # Acessar APIs
 
 - HealthMedAPI: http://localhost:30020/swagger/index.html
-- ScheduleAPI: http://localhost:30020/swagger/index.html
+- ScheduleAPI: http://localhost:30021/swagger/index.html
