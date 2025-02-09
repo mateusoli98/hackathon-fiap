@@ -1,16 +1,3 @@
-using Application.Assessment.Search.Search;
-using Application.UseCases.AppoAssessmentintment.Create;
-using Application.UseCases.Assessment.Create.Interfaces;
-using Application.UseCases.Assessment.Create;
-using Application.UseCases.Assessment.Delete.Interfaces;
-using Application.UseCases.Assessment.Delete;
-using Application.UseCases.Assessment.DeletePermanently.Interfaces;
-using Application.UseCases.Assessment.DeletePermanently;
-using Application.UseCases.Assessment.Get.Interfaces;
-using Application.UseCases.Assessment.Get;
-using Application.UseCases.Assessment.Interfaces;
-using Application.UseCases.Assessment.Search.Interfaces;
-using Application.UseCases.Assessment;
 using Application.UseCases.Doctor.Create.Interfaces;
 using Application.UseCases.Doctor.Create;
 using Application.UseCases.Doctor.Delete.Interfaces;
@@ -53,19 +40,6 @@ builder.Services.AddSwaggerGen();
 
 // RabbitMQ
 builder.Services.AddSingleton<IRabbitMqProducerService, RabbitMqProducerService>();
-
-// Assessments
-builder.Services.AddSingleton<IAssessmentRepository, AssessmentRepository>();
-builder.Services.AddSingleton<IGetAssessmentUseCase, GetAssessmentUseCase>();
-builder.Services.AddSingleton<ISearchAssessmentUseCase, SearchAssessmentUseCase>();
-builder.Services.AddSingleton<ICreateAssessmentProcessingUseCase, CreateAssessmentProcessingUseCase>();
-builder.Services.AddSingleton<ISendCreateAssessmentRequestUseCase, SendCreateAssessmentRequestUseCase>();
-builder.Services.AddSingleton<IUpdateAssessmentProcessingUseCase, UpdateAssessmentProcessingUseCase>();
-builder.Services.AddSingleton<ISendUpdateAssessmentRequestUseCase, SendUpdateAssessmentRequestUseCase>();
-builder.Services.AddSingleton<IDeleteAssessmentProcessingUseCase, DeleteAssessmentProcessingUseCase>();
-builder.Services.AddSingleton<ISendDeleteAssessmentRequestUseCase, SendDeleteAssessmentRequestUseCase>();
-builder.Services.AddSingleton<IDeleteAssessmentPermanentlyProcessingUseCase, DeleteAssessmentPermanentlyProcessingUseCase>();
-builder.Services.AddSingleton<ISendDeleteAssessmentPermanentlyRequestUseCase, SendDeleteAssessmentPermanentlyProcessingUseCase>();
 
 // Doctors
 builder.Services.AddSingleton<IDoctorRepository, DoctorRepository>();

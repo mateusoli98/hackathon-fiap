@@ -1,15 +1,4 @@
-﻿using Application.UseCases.AppoAssessmentintment.Create;
-using Application.UseCases.Appointment.Create;
-using Application.UseCases.Appointment.Create.Interfaces;
-using Application.UseCases.Appointment.Delete;
-using Application.UseCases.Appointment.Delete.Interfaces;
-using Application.UseCases.Assessment.Create.Interfaces;
-using Application.UseCases.Assessment.DeletePermanently.Interfaces;
-using Application.UseCases.Doctor.Create;
-using Application.UseCases.Doctor.Create.Interfaces;
-using Application.UseCases.Patient.Create;
-using Application.UseCases.Patient.Create.Interfaces;
-using Domain.Repositories.Relational;
+﻿using Domain.Repositories.Relational;
 using Infra.Migrations;
 using Infra.Persistence.Sql.Context;
 using Infra.Persistence.Sql.Repositories;
@@ -39,9 +28,7 @@ public class Program
 
         builder.Services.AddSingleton<IRabbitMqProducerService, RabbitMqProducerService>();
 
-        //builder.Services.AddSingleton<IUseCase, UseCase>();
-       
-        builder.Services.AddSingleton<IDeleteAssessmentPermanentlyProcessingUseCase, IDeleteAssessmentPermanentlyProcessingUseCase >();
+        //builder.Services.AddSingleton<IUseCase, UseCase>();       
 
         builder.Services.AddHostedService<Worker>();
 

@@ -13,7 +13,5 @@ public class DoctorAvailability
     public bool IsEnabled { get; set; }
 
     [ForeignKey("Id")]
-    public Doctor Doctor { get; set; } 
-    [ForeignKey("Id")]
-    public HealthCenter Place { get; set; }
+    public Doctor Doctor { get; set; }  
 }
