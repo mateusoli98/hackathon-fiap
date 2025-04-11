@@ -6,9 +6,9 @@ online (Telemedicina) por meio de sistemas terceiros como Google Agenda e
 Google Meetings.
 
 # Grupo - 17
-- Mateus Oliveira - RM355320
-- Renan Ferreira - RM353185
-- Thiago Matos - RM355947
+- Mateus Oliveira
+- Renan Ferreira
+- Thiago Matos
 
 ## Arquitetura utilizada
 
